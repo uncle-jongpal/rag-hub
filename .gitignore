@@ -1,0 +1,29 @@
+.env
+.venv/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+
+# 데이터/캐시
+data/cache/
+data/downloads/
+*.faiss
+qdrant_storage/
+
+# 평가 결과 (날짜별 산출물은 깃에 안 올림)
+evaluation/results/*.json
+evaluation/results/*.md
+!evaluation/results/.gitkeep
+
+# 노트북 체크포인트
+.ipynb_checkpoints/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+.DS_Store
