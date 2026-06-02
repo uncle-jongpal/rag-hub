@@ -1,0 +1,16 @@
+.env
+.git
+.gitignore
+.venv
+__pycache__
+*.pyc
+*.pyo
+.pytest_cache
+.ruff_cache
+.mypy_cache
+.ipynb_checkpoints
+evaluation/results
+.idea
+.vscode
+*.swp
+.DS_Store
