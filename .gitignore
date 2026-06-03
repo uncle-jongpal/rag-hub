@@ -27,3 +27,7 @@ evaluation/results/*.md
 .vscode/
 *.swp
 .DS_Store
+
+# V4 데이터셋 교체 시 V3 백업 (재구성 가능, 깃 제외)
+*.v3.bak
+data/wiki/korean_wiki_100.jsonl
