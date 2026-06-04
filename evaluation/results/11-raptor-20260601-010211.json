@@ -1,0 +1,106 @@
+{
+  "summary": {
+    "faithfulness": 0.9666666666666667,
+    "context_precision": 0.9999999999708333,
+    "context_recall": 1.0,
+    "answer_relevancy": 0.7457222938537598
+  },
+  "by_question": [
+    {
+      "user_input": "BGE-M3 임베딩 모델은 누가 언제 공개했고 어떤 특징을 가집니까?",
+      "retrieved_contexts": [
+        "BGE-M3는 베이징지능과학원(BAAI)이 2024년 공개한 다국어 임베딩 모델입니다. M3는 Multi-Functionality, Multi-Linguality, Multi-Granularity의 약자로 dense, sparse, multi-vector 세 가지 검색 방식을 한 모델로 지원합니다. 100여 개 언어를 다루며 한국어 성능도 우수해 한국어 RAG 베이스라인으로 자주 사용됩니다. 8K 토큰 길이까지 처리 가능하며 로컬 실행이 가능해 API 비용 부담이 없습니다.",
+        "BGE-M3는 베이징지능과학원(BAAI)이 2024년 공개한 다국어 임베딩 모델로, **Multi-Functionality, Multi-Linguality, Multi-Granularity**를 특징으로 하며 **dense, sparse, multi-vector** 세 가지 검색 방식을 지원합니다. 100여 개 언어(한국어 포함)를 다루며, **8K 토큰 길이**까지 처리 가능하고 로컬 실행을 통해 **API 비용 부담이 없습니다**.\n\n한편, **HyDE(2022년 카네기멜런대 제안)**는 LLM이 생성한 가설 답변의 임베딩으로 검색하는 기법으로, **질문-답변 간 어휘/문체 차이로 인한 의미적 매칭 약화**를 보완합니다. 그러나 **LLM 호출 추가로 인한 지연과 비용 증가**가 단점으로 지적됩니다.",
+        "BGE-M3는 베이징지능과학원(BAAI)이 2024년 공개한 다국어 임베딩 모델로, **Multi-Functionality, Multi-Linguality, Multi-Granularity**를 특징으로 하며 **dense, sparse, multi-vector** 세 가지 검색 방식을 지원합니다. **100여 개 언어**를 다루며 한국어 성능이 우수해 한국어 RAG 베이스라인으로 활용되고, **8K 토큰 길이**까지 처리 가능하며 로컬 실행을 통해 API 비용을 절감할 수 있습니다.\n\n한편, **HyDE(2022년 카네기멜런대 제안)**는 LLM이 생성한 가설 답변의 임베딩으로 검색하는 기법으로, **질문-답변 간 어휘/문체 차이로 인한 의미적 매칭 약화**를 보완합니다. **Gao et al.(2022)의 Hypothetical Document Embeddings**는 가설 답변이 관련 문서와 어휘 분포를 공유해 검색 성능을 높이는 원리를 설명합니다. 단, **LLM 호출 추가로 인한 지연과 비용 증가**가 단점으로 지적됩니다.",
+        "정보 검색에서 **BM25**는 1990년대 Robertson과 Spärck Jones가 개발한 TF-IDF 기반의 확률적 랭킹 함수로, 한국어 적용 시 **Kiwi, Mecab-ko, Nori** 같은 형태소 분석기가 필요하며, **RAG 하이브리드 검색**에서 어휘 일치와 임베딩의 의미 일치를 결합하는 데 활용됩니다. **Multi-query 기법**은 LLM으로 사용자 질문을 여러 표현으로 확장해 검색한 뒤 **Reciprocal Rank Fusion(RRF)**로 결과를 통합하는 방식으로, 특히 짧거나 모호한 질의에서 **회수율(Recall)**을 높이며, **LangChain의 MultiQueryRetriever**가 대표 구현입니다. **RRF**는 서로 다른 점수 스케일을 가진 시스템(예: BM25 점수와 cosine similarity)을 **1/(k+rank)**(k=60) 방식으로 안전하게 결합하는 단순 yet 강력한 알고리즘으로, 하이브리드 검색의 표준 통합 방법으로 자리잡았습니다.",
+        "**공통 주제**: 2020년대 초반부터 발전한 **검색 증강 생성(RAG) 시스템과 검색 최적화 기법**으로, 외부 지식 기반 활용, 검색-생성 파이프라인, 평가 메트릭, 그리고 2024년 이후 등장한 후처리·계층적·밀집 임베딩 기반의 고도화된 검색 기법들까지 포괄합니다.\n\n**핵심 내용**:\n1. **RAG의 기본 구조와 발전**: 2020년 제안된 RAG는 **문서 인덱싱 → 질의 검색 → 컨텍스트 기반 LLM 호출**의 3단계로 **환각(hallucination)과 지식 만료 문제를 보완**하며, Self-RAG(2023)는 **Reflection token**을 통한 적응형 검색, Corrective RAG(2024)는 **신뢰도 평가 후 보완**으로 강건성을 높였습니다.\n2. **검색 최적화 기법**: BM25(희소 검색)와 BGE-M3(밀집/다국어 임베딩) 등 **다양한 검색 방식**이 RAG에 활용되며, **Multi-query, RRF(Reciprocal Rank Fusion), HyDE** 등은 질의 확장·하이브리드 검색·의미적 매칭 약화를 보완합니다.\n3. **후처리와 계층적 구조**: **Reranking(재정렬), RAPTOR(재귀적 요약 트리), Parent-Child 청킹** 등은 검색 정확도를 높이지만 **비용(LLM 호출, 인덱싱)**과 **지연(latency)**이 단점으로 지적됩니다.\n4. **2024년 최신 기법**: **Contextual Retrieval**은 청크에 맥락 설명을 추가해 검색 실패율 49% 감소를, **Prompt Caching**은 시스템 프롬프트/컨텍스트 캐시로 **비용 50-90% 절감**을 목표로 하며, 두 기법 모두 **프롬프트 처리 효율화**에 초점을 맞춥니다."
+      ],
+      "response": "BGE-M3 임베딩 모델은 **베이징지능과학원(BAAI)**이 **2024년** 공개한 모델입니다. 특징은 다음과 같습니다:\n\n- **Multi-Functionality, Multi-Linguality, Multi-Granularity** (다기능성, 다국어 지원, 다입도 지원)\n- **dense, sparse, multi-vector** 세 가지 검색 방식을 한 모델에서 지원\n- **100여 개 언어**를 다루며, 한국어 성능이 우수\n- **8K 토큰 길이**까지 처리 가능\n- **로컬 실행**을 지원해 API 비용 부담이 없음",
+      "reference": "BGE-M3는 베이징지능과학원(BAAI)이 2024년 공개한 다국어 임베딩 모델입니다. dense, sparse, multi-vector 세 가지 검색 방식을 한 모델로 지원하며 100여 개 언어를 다루고 8K 토큰 길이까지 처리 가능합니다.",
+      "faithfulness": 1.0,
+      "context_precision": NaN,
+      "context_recall": 1.0,
+      "answer_relevancy": 0.7211364507675171
+    },
+    {
+      "user_input": "HyDE가 일반 RAG보다 검색 품질을 높이는 원리는 무엇입니까?",
+      "retrieved_contexts": [
+        "HyDE는 2022년 카네기멜런대 연구진이 제안한 기법으로, 질문 자체가 아닌 LLM이 생성한 가설 답변의 임베딩으로 검색하는 방법입니다. 질문과 답변 텍스트는 어휘/문체가 달라 직접 임베딩 비교가 약할 수 있는데, HyDE는 답변의 어휘 분포를 따라 검색해 의미적 매칭을 강화합니다. 단점은 LLM 호출이 한 번 더 필요해 지연과 비용이 증가한다는 점입니다.",
+        "**공통 주제**: 검색 시스템의 정밀도와 효율성을 높이기 위한 후처리, 계층적/의미적 검색 기법 및 RAG(Retrieval-Augmented Generation) 개선 기술.\n\n**핵심 내용**:\n1) **RAG 및 변형 기법**: RAG는 외부 지식 베이스를 활용해 LLM의 환각·지식 만료 문제를 보완하며, Self-RAG(2023)·Corrective RAG(2024)·GraphRAG(2024)·RAPTOR 등은 적응형·그래프 기반·계층적 트리 구조로 한계를 극복합니다. RAGAS는 Faithfulness·Answer Relevancy·Context Precision·Recall로 RAG 시스템을 정량 평가합니다.\n2) **검색 최적화 기법**: BM25(확률적 랭킹 함수)·Multi-query·RRF(Reciprocal Rank Fusion)·BGE-M3(다국어 임베딩)·HyDE 등은 어휘/의미적 일치·질의 확장·하이브리드 검색·가설 답변 임베딩 등으로 검색 품질을 높입니다. Reranking·RAPTOR·Parent-Child 청킹·Dense retrieval 등은 재정렬·계층적 요약·계층적 청킹·밀집 벡터화를 통해 정밀도를 제고합니다.\n3) **RAG 후처리 및 캐싱**: 2024년 하반기 Contextual Retrieval(Anthropic)은 청크에 맥락 설명을 추가해 retrieval failure rate를 **49% 감소**시켰으며, Prompt Caching(Anthropic·OpenAI)은 시스템 프롬프트·컨텍스트를 캐시해 **50-90% 비용 절감**과 지연 감소 효과를 제공합니다.",
+        "**공통 주제**: 2020년대 초반부터 발전한 **검색 증강 생성(RAG) 시스템과 검색 최적화 기법**으로, 외부 지식 기반 활용, 검색-생성 파이프라인, 평가 메트릭, 그리고 2024년 이후 등장한 후처리·계층적·밀집 임베딩 기반의 고도화된 검색 기법들까지 포괄합니다.\n\n**핵심 내용**:\n1. **RAG의 기본 구조와 발전**: 2020년 제안된 RAG는 **문서 인덱싱 → 질의 검색 → 컨텍스트 기반 LLM 호출**의 3단계로 **환각(hallucination)과 지식 만료 문제를 보완**하며, Self-RAG(2023)는 **Reflection token**을 통한 적응형 검색, Corrective RAG(2024)는 **신뢰도 평가 후 보완**으로 강건성을 높였습니다.\n2. **검색 최적화 기법**: BM25(희소 검색)와 BGE-M3(밀집/다국어 임베딩) 등 **다양한 검색 방식**이 RAG에 활용되며, **Multi-query, RRF(Reciprocal Rank Fusion), HyDE** 등은 질의 확장·하이브리드 검색·의미적 매칭 약화를 보완합니다.\n3. **후처리와 계층적 구조**: **Reranking(재정렬), RAPTOR(재귀적 요약 트리), Parent-Child 청킹** 등은 검색 정확도를 높이지만 **비용(LLM 호출, 인덱싱)**과 **지연(latency)**이 단점으로 지적됩니다.\n4. **2024년 최신 기법**: **Contextual Retrieval**은 청크에 맥락 설명을 추가해 검색 실패율 49% 감소를, **Prompt Caching**은 시스템 프롬프트/컨텍스트 캐시로 **비용 50-90% 절감**을 목표로 하며, 두 기법 모두 **프롬프트 처리 효율화**에 초점을 맞춥니다.",
+        "**검색 증강 생성(RAG)**은 2020년 Facebook AI Research가 제안한 기법으로, 대형 언어 모델(LLM)이 외부 지식 베이스를 참조해 **환각(hallucination)과 지식 만료 문제를 보완**합니다. RAG는 **문서 인덱싱 → 질의 검색 → 컨텍스트 기반 LLM 호출**의 3단계 파이프라인으로 구성됩니다.\n\n**RAGAS**는 RAG 시스템을 평가하는 오픈소스 Python 프레임워크로, **Faithfulness(컨텍스트 충실도), Answer Relevancy(질문 적합성), Context Precision(검색 정확도), Context Recall(검색 완전성)** 네 가지 메트릭으로 품질을 점수화하며, **LangChain/LlamaIndex와 통합**되어 있지만 LLM 호출 비용이 큽니다.\n\n**Self-RAG(2023)**는 LLM이 **Reflection token을 출력해 검색 필요성, 관련성, 지원도를 자가 평가**하는 적응형 기법으로, 단순한 질문에선 검색을 생략하고 품질이 낮은 검색 결과는 무시해 **비용 효율성을 높입니다**. **Corrective RAG(2024)**는 검색된 문서를 평가해 **신뢰도(ambiguous/incorrect)에 따라 웹 검색이나 지식 재구성**으로 보완하는Corrective RAG(2024)는 검색된 문서를 평가해 **신뢰도(ambiguous/incorrect)에 따라 웹 검색이나 지식 재구성**으로 보완하는 **강건성(robustness)을 강화**합니다.\n\n**GraphRAG(2024)**는 Microsoft가 개발한 변형으로, 문서를 **엔티티/관계 그래프로 변환해 인덱싱**하고 커뮤니티 탐지로 주제 클러스터를 형성해 **요약형 질문에 강하지만 인덱싱 비용이 높습니다**. **RAPTOR(2024)**는 문서 청크를 **재귀적 요약 트리로 변환**해 다중 문서 질의응답에 특화됐습니다.",
+        "Retrieval-Augmented Generation (RAG) is a technique introduced by Lewis et al. (Facebook AI, 2020) that augments large language models with external knowledge retrieval. Instead of relying solely on parameters, the model retrieves relevant passages from a corpus and conditions its output on them. RAG mitigates hallucinations and stale knowledge in LLMs."
+      ],
+      "response": "HyDE는 **LLM이 생성한 가설 답변의 임베딩**을 검색에 활용해 **의미적 매칭을 강화**하는 방식으로 일반 RAG보다 검색 품질을 높입니다.\n\n구체적으로, 일반 RAG는 질문의 임베딩과 문서 임베딩을 직접 비교하는 반면, HyDE는 **질문에 대한 LLM의 가설 답변(예: \"질문에 대한 예상 답변\")을 생성한 후, 이 가설 답변의 임베딩을 기반으로 검색을 수행**합니다. 이로 인해 **질문과 문서의 어휘/문체가 달라 발생하는 의미적 불일치 문제를 완화**하고, **답변의 어휘 분포를 따라 검색**하여 더 관련성 높은 문서를 검색할 수 있습니다.\n\n(참고: 컨텍스트 (1)에서 \"질문과 답변 텍스트는 어휘/문체가 달라 직접 임베딩 비교가 약할 수 있는데, HyDE는 답변의 어휘 분포를 따라 검색해 의미적 매칭을 강화합니다.\"라고 설명됨)",
+      "reference": "HyDE는 질문이 아닌 LLM이 생성한 가설 답변의 임베딩으로 검색합니다. 답변의 어휘 분포가 실제 문서와 유사해 의미적 매칭이 강화됩니다.",
+      "faithfulness": 0.9,
+      "context_precision": 0.9999999999666667,
+      "context_recall": 1.0,
+      "answer_relevancy": 0.7015552520751953
+    },
+    {
+      "user_input": "Reciprocal Rank Fusion에서 점수는 어떻게 계산되며 상수 k의 기본값은?",
+      "retrieved_contexts": [
+        "Reciprocal Rank Fusion은 여러 검색 시스템의 결과 순위를 결합하는 단순하고 강력한 알고리즘입니다. 각 결과의 점수를 1/(k + rank)로 계산해 합산하며, k는 상수(보통 60)입니다. 점수 스케일이 다른 시스템(BM25 점수와 cosine similarity 등)을 결합할 때 순위만 사용하므로 안전합니다. 하이브리드 검색의 표준 통합 방법으로 자리잡았습니다.",
+        "Reciprocal Rank Fusion (RRF) combines rankings from multiple retrievers by summing 1/(k+rank) scores. Because it uses ranks rather than raw scores, RRF safely fuses heterogeneous systems like BM25 and dense vectors. It is the standard hybrid-search fusion algorithm.",
+        "정보 검색에서 **BM25**는 1990년대 Robertson과 Spärck Jones가 개발한 TF-IDF 기반의 확률적 랭킹 함수로, 한국어 적용 시 **Kiwi, Mecab-ko, Nori** 같은 형태소 분석기가 필요하며, **RAG 하이브리드 검색**에서 어휘 일치와 임베딩의 의미 일치를 결합하는 데 활용됩니다. **Multi-query 기법**은 LLM으로 사용자 질문을 여러 표현으로 확장해 검색한 뒤 **Reciprocal Rank Fusion(RRF)**로 결과를 통합하는 방식으로, 특히 짧거나 모호한 질의에서 **회수율(Recall)**을 높이며, **LangChain의 MultiQueryRetriever**가 대표 구현입니다. **RRF**는 서로 다른 점수 스케일을 가진 시스템(예: BM25 점수와 cosine similarity)을 **1/(k+rank)**(k=60) 방식으로 안전하게 결합하는 단순 yet 강력한 알고리즘으로, 하이브리드 검색의 표준 통합 방법으로 자리잡았습니다.",
+        "정보 검색에서 BM25는 1990년대 Robertson과 Spärck Jones가 개발한 확률적 랭킹 함수로, TF-IDF를 발전시킨 표준 희소 검색기(sparse retriever)입니다. 한국어 적용 시 형태소 분석기(Kiwi, Mecab-ko, Nori)가 필요하며, RAG의 하이브리드 검색에서 BM25는 어휘 일치 강점을 제공합니다. **Multi-query 기법**은 LLM으로 사용자 질문을 여러 표현으로 확장해 검색한 뒤 RRF(Reciprocal Rank Fusion)로 결과를 통합하며, 짧은/모호한 질의 시 회수율(Recall)을 높입니다. RRF는 1/(k+rank) 점수 합산 방식으로 점수 스케일이 다른 시스템(BM25, 임베딩 등)을 안전하게 결합하는 표준 하이브리드 검색 알고리즘입니다.",
+        "Multi-query 기법은 사용자 질문 하나를 LLM으로 여러 표현/관점의 질문으로 확장해 각각 검색한 뒤 결과를 합칩니다. 사용자 질문이 짧거나 모호할 때 회수율(Recall)을 높이는 효과가 있으며, 검색 결과 통합에는 Reciprocal Rank Fusion(RRF)이 자주 사용됩니다. LangChain의 MultiQueryRetriever가 대표적인 구현입니다."
+      ],
+      "response": "Reciprocal Rank Fusion(RRF)에서 점수는 **1/(k + rank)**로 계산되며, 상수 **k의 기본값은 60**입니다.",
+      "reference": "RRF는 각 검색 결과의 점수를 1/(k + rank)로 계산해 합산합니다. k의 기본값은 60입니다.",
+      "faithfulness": 1.0,
+      "context_precision": 0.999999999975,
+      "context_recall": 1.0,
+      "answer_relevancy": 0.8144751787185669
+    }
+  ],
+  "usage": {
+    "indexing": {
+      "by_model": {
+        "mistral-small-latest": {
+          "model": "mistral-small-latest",
+          "calls": 8,
+          "input_tokens": 4974,
+          "output_tokens": 2003,
+          "cost_usd": 0.0,
+          "elapsed_seconds": 34.17543594597373
+        }
+      },
+      "totals": {
+        "calls": 8,
+        "input_tokens": 4974,
+        "output_tokens": 2003,
+        "cost_usd": 0.0,
+        "elapsed_seconds": 34.175
+      }
+    },
+    "inference": {
+      "by_model": {
+        "mistral-small-latest": {
+          "model": "mistral-small-latest",
+          "calls": 3,
+          "input_tokens": 3978,
+          "output_tokens": 424,
+          "cost_usd": 0.0,
+          "elapsed_seconds": 5.37669090507552
+        }
+      },
+      "totals": {
+        "calls": 3,
+        "input_tokens": 3978,
+        "output_tokens": 424,
+        "cost_usd": 0.0,
+        "elapsed_seconds": 5.377
+      }
+    }
+  },
+  "meta": {
+    "technique": "11-raptor",
+    "top_k": 5,
+    "n_questions": 3,
+    "gen_llm_model": "mistral-small-latest",
+    "eval_llm_model": "mistral-large-latest",
+    "timestamp": "2026-06-01T01:02:11"
+  }
+}

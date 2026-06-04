@@ -1,0 +1,199 @@
+{
+  "summary": {
+    "faithfulness": 0.0,
+    "context_precision": 0.0,
+    "context_recall": 0.0,
+    "answer_relevancy": 0.7794509092966716
+  },
+  "by_question": [
+    {
+      "user_input": "인공지능의 영어 약자는 무엇입니까?",
+      "retrieved_contexts": [],
+      "response": "\n\n인공지능의 영어 약자는 **AI**입니다. (Artificial Intelligence의 약자입니다.)",
+      "reference": "AI (artificial intelligence)입니다.",
+      "faithfulness": 0.0,
+      "context_precision": 0.0,
+      "context_recall": 0.0,
+      "answer_relevancy": 0.7804433107376099
+    },
+    {
+      "user_input": "기계 학습의 영어 약자는?",
+      "retrieved_contexts": [],
+      "response": "\n\n기계 학습의 영어 약자는 **ML** (Machine Learning)입니다.",
+      "reference": "ML (machine learning)입니다.",
+      "faithfulness": 0.0,
+      "context_precision": 0.0,
+      "context_recall": 0.0,
+      "answer_relevancy": 0.7963320016860962
+    },
+    {
+      "user_input": "자연어 처리의 영어 약자는?",
+      "retrieved_contexts": [],
+      "response": "\n\n자연어 처리의 영어 약자는 **NLP**(Natural Language Processing)입니다.",
+      "reference": "NLP (natural language processing)입니다.",
+      "faithfulness": 0.0,
+      "context_precision": 0.0,
+      "context_recall": 0.0,
+      "answer_relevancy": 0.7886669635772705
+    },
+    {
+      "user_input": "한글을 창제한 조선의 왕은 누구입니까?",
+      "retrieved_contexts": [],
+      "response": "\n\n한글을 창제한 조선의 왕은 **세종대왕**(제 4 대 왕)입니다.",
+      "reference": "세종대왕(세종)입니다.",
+      "faithfulness": NaN,
+      "context_precision": 0.0,
+      "context_recall": 0.0,
+      "answer_relevancy": 0.7786425352096558
+    },
+    {
+      "user_input": "임진왜란에서 명량 해전 등을 승리로 이끈 조선의 장수는 누구입니까?",
+      "retrieved_contexts": [],
+      "response": "\n\n임진왜란에서 명량 해전 등을 승리로 이끈 조선의 장수는 **이순신** 장군입니다.",
+      "reference": "이순신 장군입니다.",
+      "faithfulness": NaN,
+      "context_precision": 0.0,
+      "context_recall": 0.0,
+      "answer_relevancy": 0.800499677658081
+    },
+    {
+      "user_input": "대한민국의 수도는 어디입니까?",
+      "retrieved_contexts": [],
+      "response": "\n\n대한민국의 수도는 서울입니다.",
+      "reference": "서울특별시입니다.",
+      "faithfulness": 0.0,
+      "context_precision": 0.0,
+      "context_recall": 0.0,
+      "answer_relevancy": 0.7862594127655029
+    },
+    {
+      "user_input": "경복궁이 위치한 도시는 어디입니까?",
+      "retrieved_contexts": [],
+      "response": "\n\n경복궁은 서울특별시에 위치해 있습니다.",
+      "reference": "서울특별시입니다.",
+      "faithfulness": 0.0,
+      "context_precision": 0.0,
+      "context_recall": 0.0,
+      "answer_relevancy": 0.791443407535553
+    },
+    {
+      "user_input": "광합성은 어떤 에너지를 어떤 에너지로 전환하는 과정입니까?",
+      "retrieved_contexts": [],
+      "response": "\n\n광합성은 **빛 에너지(태양광 에너지)**를 **화학 에너지**로 전환하는 과정입니다. \n\n구체적으로 식물, 조류 및 일부 세균이 태양의 빛 에너지를 흡수하여 이산화탄소와 물을 포도당 등의 유기물로 변환하며, 이때 빛 에너지가 유기물(주로 포도당)의 화학 결합 내에 화학 에너지 형태로 저장됩니다.",
+      "reference": "빛 에너지(태양 에너지)를 화학 에너지로 전환하는 과정입니다.",
+      "faithfulness": NaN,
+      "context_precision": 0.0,
+      "context_recall": 0.0,
+      "answer_relevancy": 0.7819021344184875
+    },
+    {
+      "user_input": "5세대 이동 통신의 약칭은 무엇입니까?",
+      "retrieved_contexts": [],
+      "response": "\n\n5세대 이동 통신의 약칭은 **5G**입니다.",
+      "reference": "5G 입니다.",
+      "faithfulness": 0.0,
+      "context_precision": 0.0,
+      "context_recall": 0.0,
+      "answer_relevancy": 0.771360456943512
+    },
+    {
+      "user_input": "6.25 전쟁이 발발한 연도는 언제입니까?",
+      "retrieved_contexts": [],
+      "response": "\n\n6.25 전쟁은 **1950 년** 6 월 25 일에 발발했습니다.",
+      "reference": "1950년입니다.",
+      "faithfulness": NaN,
+      "context_precision": 0.0,
+      "context_recall": 0.0,
+      "answer_relevancy": 0.7282776236534119
+    },
+    {
+      "user_input": "태권도가 종주국인 나라는 어디입니까?",
+      "retrieved_contexts": [],
+      "response": "\n\n태권도의 종주국은 **대한민국**입니다. 태권도는 한국의 전통 무술을 바탕으로 20세기 중반에 체계화되어 발전한 현대 무술로, 2018년 자카르타 아시안게임에서 시범 종목으로 처음 선보인 후 2020년 도쿄 올림픽부터 정식 메달 종목으로 채택되었습니다. 또한 유네스코 인류무형문화유산으로 등재되어 한국의 대표적인 문화유산으로 인정받고 있습니다.",
+      "reference": "대한민국(한국)입니다.",
+      "faithfulness": NaN,
+      "context_precision": 0.0,
+      "context_recall": 0.0,
+      "answer_relevancy": 0.7716484069824219
+    },
+    {
+      "user_input": "4·19 혁명은 어느 연도에 일어났습니까?",
+      "retrieved_contexts": [],
+      "response": "\n\n4·19 혁명은 **1960 년**에 일어났습니다.",
+      "reference": "1960년입니다.",
+      "faithfulness": NaN,
+      "context_precision": 0.0,
+      "context_recall": 0.0,
+      "answer_relevancy": 0.6857234835624695
+    },
+    {
+      "user_input": "DNA의 정식 영문 명칭은 무엇입니까?",
+      "retrieved_contexts": [],
+      "response": "\n\nDNA의 정식 영문 명칭은 **Deoxyribonucleic acid**입니다.",
+      "reference": "Deoxyribonucleic Acid (디옥시리보핵산)입니다.",
+      "faithfulness": 0.0,
+      "context_precision": 0.0,
+      "context_recall": 0.0,
+      "answer_relevancy": 0.7937438488006592
+    },
+    {
+      "user_input": "국내총생산을 가리키는 영문 약자는?",
+      "retrieved_contexts": [],
+      "response": "\n\n국내총생산을 가리키는 영문 약자는 **GDP**(Gross Domestic Product)입니다.",
+      "reference": "GDP (Gross Domestic Product) 입니다.",
+      "faithfulness": 0.0,
+      "context_precision": 0.0,
+      "context_recall": 0.0,
+      "answer_relevancy": 0.8010156154632568
+    },
+    {
+      "user_input": "조선의 4대 왕으로 한글 창제를 주도한 인물의 묘호는?",
+      "retrieved_contexts": [],
+      "response": "\n\n조선 제4대 왕으로 한글 창제를 주도한 인물의 묘호는 **세종(世宗)**입니다.",
+      "reference": "세종입니다.",
+      "faithfulness": NaN,
+      "context_precision": 0.0,
+      "context_recall": 0.0,
+      "answer_relevancy": 0.8358047604560852
+    }
+  ],
+  "usage": {
+    "indexing": {
+      "by_model": {},
+      "totals": {
+        "calls": 0,
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "cost_usd": 0,
+        "elapsed_seconds": 0
+      }
+    },
+    "inference": {
+      "by_model": {
+        "AIXERA/Qwen3.6-27B-FP8": {
+          "model": "AIXERA/Qwen3.6-27B-FP8",
+          "calls": 30,
+          "input_tokens": 2508,
+          "output_tokens": 10336,
+          "cost_usd": 0.0,
+          "elapsed_seconds": 181.69980124523863
+        }
+      },
+      "totals": {
+        "calls": 30,
+        "input_tokens": 2508,
+        "output_tokens": 10336,
+        "cost_usd": 0.0,
+        "elapsed_seconds": 181.7
+      }
+    }
+  },
+  "meta": {
+    "technique": "08-self-rag",
+    "top_k": 5,
+    "n_questions": 15,
+    "gen_llm_model": "AIXERA/Qwen3.6-27B-FP8",
+    "eval_llm_model": "AIXERA/Qwen3.6-27B-FP8",
+    "timestamp": "2026-06-04T03:56:14"
+  }
+}

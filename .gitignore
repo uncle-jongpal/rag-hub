@@ -14,9 +14,7 @@ data/downloads/
 *.faiss
 qdrant_storage/
 
-# 평가 결과 (날짜별 산출물은 깃에 안 올림)
-evaluation/results/*.json
-evaluation/results/*.md
+# 평가 결과 (V4 이후 깃에 포함 - 대시보드 즉시 동작 + 재현 가능)
 !evaluation/results/.gitkeep
 
 # 노트북 체크포인트
@@ -30,4 +28,3 @@ evaluation/results/*.md
 
 # V4 데이터셋 교체 시 V3 백업 (재구성 가능, 깃 제외)
 *.v3.bak
-data/wiki/korean_wiki_100.jsonl

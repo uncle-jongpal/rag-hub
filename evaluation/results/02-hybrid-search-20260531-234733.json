@@ -1,0 +1,97 @@
+{
+  "summary": {
+    "faithfulness": 0.9047619047619048,
+    "context_precision": 0.999999999925,
+    "context_recall": 1.0,
+    "answer_relevancy": 0.7314982016881307
+  },
+  "by_question": [
+    {
+      "user_input": "BGE-M3 임베딩 모델은 누가 언제 공개했고 어떤 특징을 가집니까?",
+      "retrieved_contexts": [
+        "BGE-M3는 베이징지능과학원(BAAI)이 2024년 공개한 다국어 임베딩 모델입니다. M3는 Multi-Functionality, Multi-Linguality, Multi-Granularity의 약자로 dense, sparse, multi-vector 세 가지 검색 방식을 한 모델로 지원합니다. 100여 개 언어를 다루며 한국어 성능도 우수해 한국어 RAG 베이스라인으로 자주 사용됩니다. 8K 토큰 길이까지 처리 가능하며 로컬 실행이 가능해 API 비용 부담이 없습니다.",
+        "BM25(Best Matching 25)는 정보 검색에서 문서와 질의의 관련도를 계산하는 확률적 모델 기반 랭킹 함수입니다. TF-IDF의 발전된 형태로, 1990년대 영국 정보검색 연구진 Stephen Robertson과 Karen Spärck Jones가 개발했습니다. 한국어에 적용할 때는 형태소 분석이 필수이며, Kiwi, Mecab-ko, Nori 같은 분석기가 많이 사용됩니다. RAG의 하이브리드 검색에서는 BM25의 어휘 일치 강점과 임베딩의 의미 일치 강점을 결합합니다.",
+        "Reranking은 1차 검색 결과 수십 개를 cross-encoder 모델로 재정렬해 정밀도를 높이는 기법입니다. Bi-encoder가 질의/문서를 독립 임베딩하는 데 비해 cross-encoder는 둘을 함께 보고 점수를 매겨 정확도가 높지만 비용이 큽니다. BGE-reranker-v2-m3는 다국어 reranker로 한국어/영어를 모두 다루며 무료로 로컬 실행 가능합니다. 보통 1차로 30-50개 검색 후 reranker로 top-5를 추리는 패턴이 일반적입니다.",
+        "HyDE는 2022년 카네기멜런대 연구진이 제안한 기법으로, 질문 자체가 아닌 LLM이 생성한 가설 답변의 임베딩으로 검색하는 방법입니다. 질문과 답변 텍스트는 어휘/문체가 달라 직접 임베딩 비교가 약할 수 있는데, HyDE는 답변의 어휘 분포를 따라 검색해 의미적 매칭을 강화합니다. 단점은 LLM 호출이 한 번 더 필요해 지연과 비용이 증가한다는 점입니다.",
+        "RAPTOR(Recursive Abstractive Processing for Tree-Organized Retrieval)는 스탠포드가 2024년 발표한 트리 기반 인덱싱 기법입니다. 문서 청크를 임베딩 후 클러스터링하고, 각 클러스터를 LLM으로 요약해 상위 노드를 만드는 과정을 재귀적으로 반복해 트리를 구축합니다. 검색 시 트리의 다양한 깊이 노드에서 결과를 가져와 디테일/요약을 동시에 활용합니다. 다중 문서/장문 문서 QA에 효과적입니다."
+      ],
+      "response": "BGE-M3는 베이징지능과학원(BAAI)이 2024년에 공개한 다국어 임베딩 모델입니다. **M3**는 **Multi-Functionality** (다양한 검색 방식 지원), **Multi-Linguality** (100여 개 언어 처리), **Multi-Granularity** (dense, sparse, multi-vector 세 가지 검색 방식 지원)의 약자로, 한국어 성능이 우수해 한국어 RAG 베이스라인으로 자주 사용됩니다. 또한 8K 토큰 길이까지 처리 가능하며, 로컬 실행이 가능해 API 비용 부담이 없습니다.",
+      "reference": "BGE-M3는 베이징지능과학원(BAAI)이 2024년 공개한 다국어 임베딩 모델입니다. dense, sparse, multi-vector 세 가지 검색 방식을 한 모델로 지원하며 100여 개 언어를 다루고 8K 토큰 길이까지 처리 가능합니다.",
+      "faithfulness": 1.0,
+      "context_precision": 0.9999999999,
+      "context_recall": 1.0,
+      "answer_relevancy": 0.6872949600219727
+    },
+    {
+      "user_input": "HyDE가 일반 RAG보다 검색 품질을 높이는 원리는 무엇입니까?",
+      "retrieved_contexts": [
+        "HyDE는 2022년 카네기멜런대 연구진이 제안한 기법으로, 질문 자체가 아닌 LLM이 생성한 가설 답변의 임베딩으로 검색하는 방법입니다. 질문과 답변 텍스트는 어휘/문체가 달라 직접 임베딩 비교가 약할 수 있는데, HyDE는 답변의 어휘 분포를 따라 검색해 의미적 매칭을 강화합니다. 단점은 LLM 호출이 한 번 더 필요해 지연과 비용이 증가한다는 점입니다.",
+        "검색 증강 생성(Retrieval-Augmented Generation, RAG)은 대형 언어 모델이 외부 지식 베이스를 참조하여 답변을 생성하는 기법입니다. 2020년 Facebook AI Research가 발표한 논문에서 처음 제안되었으며, 모델 자체의 매개변수에 저장된 지식만으로 답하는 방식의 한계(환각, 지식 만료)를 보완합니다. RAG 파이프라인은 일반적으로 1) 문서 인덱싱, 2) 질문에 대한 검색, 3) 검색된 문서를 컨텍스트로 LLM 호출의 세 단계로 구성됩니다.",
+        "Self-RAG는 2023년 워싱턴대 Asai 연구진이 발표한 기법으로, LLM이 스스로 검색이 필요한지 판단하고 검색 결과의 관련성/지원도를 자가 평가합니다. Reflection token이라 불리는 특수 토큰을 출력해 검색 호출 여부와 결과 활용 정도를 제어합니다. 일반 RAG가 항상 검색을 수행하는 데 비해 Self-RAG는 단순한 질문에는 검색을 생략해 비용을 줄이고, 검색 품질이 낮으면 결과를 무시하는 등 적응적으로 동작합니다.",
+        "RAGAS는 RAG 시스템을 정량 평가하는 오픈소스 Python 프레임워크입니다. LLM을 평가자로 활용해 정답 라벨 없이도 시스템 품질을 점수화할 수 있습니다. 주요 메트릭은 Faithfulness(답변의 컨텍스트 충실도), Answer Relevancy(질문 적합성), Context Precision(검색 정확도), Context Recall(검색 완전성) 네 가지입니다. LangChain, LlamaIndex와 잘 통합되며 평가 자체에 LLM 호출이 많아 비용 관리가 중요합니다.",
+        "Reranking은 1차 검색 결과 수십 개를 cross-encoder 모델로 재정렬해 정밀도를 높이는 기법입니다. Bi-encoder가 질의/문서를 독립 임베딩하는 데 비해 cross-encoder는 둘을 함께 보고 점수를 매겨 정확도가 높지만 비용이 큽니다. BGE-reranker-v2-m3는 다국어 reranker로 한국어/영어를 모두 다루며 무료로 로컬 실행 가능합니다. 보통 1차로 30-50개 검색 후 reranker로 top-5를 추리는 패턴이 일반적입니다."
+      ],
+      "response": "HyDE는 **LLM이 생성한 가설 답변의 임베딩**을 사용하여 검색을 수행한다는 점에서 일반 RAG와 다릅니다. 일반 RAG는 질문의 임베딩을 직접 사용하여 검색하는 반면, HyDE는 **질문 자체보다는 LLM이 생성한 가설 답변의 어휘/문체 분포를 따라 검색**합니다. 이로 인해 질문과 답변 텍스트 간 어휘/문체 차이가 있더라도 **의미적 매칭이 강화**되어 검색 품질이 높아집니다.\n\n(컨텍스트 (1) 참고)",
+      "reference": "HyDE는 질문이 아닌 LLM이 생성한 가설 답변의 임베딩으로 검색합니다. 답변의 어휘 분포가 실제 문서와 유사해 의미적 매칭이 강화됩니다.",
+      "faithfulness": 0.7142857142857143,
+      "context_precision": NaN,
+      "context_recall": 1.0,
+      "answer_relevancy": 0.6951289176940918
+    },
+    {
+      "user_input": "Reciprocal Rank Fusion에서 점수는 어떻게 계산되며 상수 k의 기본값은?",
+      "retrieved_contexts": [
+        "Reciprocal Rank Fusion은 여러 검색 시스템의 결과 순위를 결합하는 단순하고 강력한 알고리즘입니다. 각 결과의 점수를 1/(k + rank)로 계산해 합산하며, k는 상수(보통 60)입니다. 점수 스케일이 다른 시스템(BM25 점수와 cosine similarity 등)을 결합할 때 순위만 사용하므로 안전합니다. 하이브리드 검색의 표준 통합 방법으로 자리잡았습니다.",
+        "Reciprocal Rank Fusion (RRF) combines rankings from multiple retrievers by summing 1/(k+rank) scores. Because it uses ranks rather than raw scores, RRF safely fuses heterogeneous systems like BM25 and dense vectors. It is the standard hybrid-search fusion algorithm.",
+        "Multi-query 기법은 사용자 질문 하나를 LLM으로 여러 표현/관점의 질문으로 확장해 각각 검색한 뒤 결과를 합칩니다. 사용자 질문이 짧거나 모호할 때 회수율(Recall)을 높이는 효과가 있으며, 검색 결과 통합에는 Reciprocal Rank Fusion(RRF)이 자주 사용됩니다. LangChain의 MultiQueryRetriever가 대표적인 구현입니다.",
+        "BM25(Best Matching 25)는 정보 검색에서 문서와 질의의 관련도를 계산하는 확률적 모델 기반 랭킹 함수입니다. TF-IDF의 발전된 형태로, 1990년대 영국 정보검색 연구진 Stephen Robertson과 Karen Spärck Jones가 개발했습니다. 한국어에 적용할 때는 형태소 분석이 필수이며, Kiwi, Mecab-ko, Nori 같은 분석기가 많이 사용됩니다. RAG의 하이브리드 검색에서는 BM25의 어휘 일치 강점과 임베딩의 의미 일치 강점을 결합합니다.",
+        "Reranking은 1차 검색 결과 수십 개를 cross-encoder 모델로 재정렬해 정밀도를 높이는 기법입니다. Bi-encoder가 질의/문서를 독립 임베딩하는 데 비해 cross-encoder는 둘을 함께 보고 점수를 매겨 정확도가 높지만 비용이 큽니다. BGE-reranker-v2-m3는 다국어 reranker로 한국어/영어를 모두 다루며 무료로 로컬 실행 가능합니다. 보통 1차로 30-50개 검색 후 reranker로 top-5를 추리는 패턴이 일반적입니다."
+      ],
+      "response": "Reciprocal Rank Fusion(RRF)에서 각 결과의 점수는 **1/(k + rank)**로 계산됩니다. 상수 **k의 기본값은 60**입니다.",
+      "reference": "RRF는 각 검색 결과의 점수를 1/(k + rank)로 계산해 합산합니다. k의 기본값은 60입니다.",
+      "faithfulness": 1.0,
+      "context_precision": 0.99999999995,
+      "context_recall": 1.0,
+      "answer_relevancy": 0.8120707273483276
+    }
+  ],
+  "usage": {
+    "indexing": {
+      "by_model": {},
+      "totals": {
+        "calls": 0,
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "cost_usd": 0,
+        "elapsed_seconds": 0
+      }
+    },
+    "inference": {
+      "by_model": {
+        "mistral-small-latest": {
+          "model": "mistral-small-latest",
+          "calls": 3,
+          "input_tokens": 2197,
+          "output_tokens": 314,
+          "cost_usd": 0.0,
+          "elapsed_seconds": 4.219243442057632
+        }
+      },
+      "totals": {
+        "calls": 3,
+        "input_tokens": 2197,
+        "output_tokens": 314,
+        "cost_usd": 0.0,
+        "elapsed_seconds": 4.219
+      }
+    }
+  },
+  "meta": {
+    "technique": "02-hybrid-search",
+    "top_k": 5,
+    "n_questions": 3,
+    "gen_llm_model": "mistral-small-latest",
+    "eval_llm_model": "mistral-large-latest",
+    "timestamp": "2026-05-31T23:47:33"
+  }
+}

@@ -1,0 +1,106 @@
+{
+  "summary": {
+    "faithfulness": 0.9487179487179488,
+    "context_precision": 0.8444444443885185,
+    "context_recall": 1.0,
+    "answer_relevancy": 0.7339482307434082
+  },
+  "by_question": [
+    {
+      "user_input": "BGE-M3 임베딩 모델은 누가 언제 공개했고 어떤 특징을 가집니까?",
+      "retrieved_contexts": [
+        "[커뮤니티 #1] 이 주제는 **검색 증강 생성(RAG, Retrieval-Augmented Generation)** 시스템의 최신 기술 동향과 그 구성 요소, 평가 방법, 그리고 다국어·다중 문서 처리 최적화에 초점을 맞추고 있습니다. 특히 **BM25(확률적 랭킹 모델)와 임베딩 기반 검색(dense/sparse/multi-vector)의 하이브리드 접근법**, **BGE-M3와 같은 다기능·다국어·다중Granularity 임베딩 모델**, 그리고 **RAGAS·RRF(Reciprocal Rank Fusion) 등 평가 및 재랭킹 기법**이 핵심입니다. 또한 **형태소 분석(Kiwi/Mecab-ko/Nori)이나 계층적 청킹(RAPTOR, Parent-Child 전략)**을 통한 한국어/다국어 지원, **GraphRAG·Knowledge Graph 기반 지식 그래프 활용**, **Prompt Caching·LLM-as-judge 등 비용·지연 최적화**까지 포괄하는 종합적인 RAG 파이프라인 구축과 운영에 대한 논의가 이루어지고 있습니다.\n관련 엔티티: 1-2문장, 1/(k + rank), 100여 개 언어, 1990년대 영국 정보검색 연구진, 1차 검색 결과, 2020, 2022년, 2023, 2023년, 2024\n\n[관련 단락]\n검색 증강 생성(Retrieval-Augmented Generation, RAG)은 대형 언어 모델이 외부 지식 베이스를 참조하여 답변을 생성하는 기법입니다. 2020년 Facebook AI Research가 발표한 논문에서 처음 제안되었으며, 모델 자체의 매개변수에 저장된 지식만으로 답하는 방식의 한계(환각, 지식 만료)를 보완합니다. RAG 파이프라인은 일반적으로 1) 문서 인덱싱, 2) 질문에 대한 검색, 3) 검색된 문서를 컨텍스트로 LLM 호출의 세 단계로 구성됩니다.\n\nBM25(Best Matching 25)는 정보 검색에서 문서와 질의의 관련도를 계산하는 확률적 모델 기반 랭킹 함수입니다. TF-IDF의 발전된 형태로, 1990년대 영국 정보검색 연구진 Stephen Robertson과 Karen Spärck Jones가 개발했습니다. 한국어에 적용할 때는 형태소 분석이 필수이며, Kiwi, Mecab-ko, Nori 같은 분석기가 많이 사용됩니다. RAG의 하이브리드 검색에서는 BM25의 어휘 일치 강점과 임베딩의 의미 일치 강점을 결합합니다.\n\nBGE-M3는 베이징지능과학원(BAAI)이 2024년 공개한 다국어 임베딩 모델입니다. M3는 Multi-Functionality, Multi-Linguality, Multi-Granularity의 약자로 dense, sparse, multi-vector 세 가지 검색 방식을 한 모델로 지원합니다. 100여 개 언어를 다루며 한국어 성능도 우수해 한국어 RAG 베이스라인으로 자주 사용됩니다. 8K 토큰 길이까지 처리 가능하며 로컬 실행이 가능해 API 비용 부담이 없습니다.\n\nHyDE는 2022년 카네기멜런대 연구진이 제안한 기법으로, 질문 자체가 아닌 LLM이 생성한 가설 답변의 임베딩으로 검색하는 방법입니다. 질문과 답변 텍스트는 어휘/문체가 달라 직접 임베딩 비교가 약할 수 있는데, HyDE는 답변의 어휘 분포를 따라 검색해 의미적 매칭을 강화합니다. 단점은 LLM 호출이 한 번 더 필요해 지연과 비용이 증가한다는 점입니다.\n\nReranking은 1차 검색 결과 수십 개를 cross-encoder 모델로 재정렬해 정밀도를 높이는 기법입니다. Bi-encoder가 질의/문서를 독립 임베딩하는 데 비해 cross-encoder는 둘을 함께 보고 점수를 매겨 정확도가 높지만 비용이 큽니다. BGE-reranker-v2-m3는 다국어 reranker로 한국어/영어를 모두 다루며 무료로 로컬 실행 가능합니다. 보통 1차로 30-50개 검색 후 reranker로 top-5를 추리는 패턴이 일반적입니다.",
+        "[커뮤니티 #9] 이 주제는 **BM25와 밀집 임베딩 검색기(retrievers)**가 **하이브리드 검색(hybrid search)**에서 어떻게 활용되는지를 다룹니다. BM25(확장된 BM25 알고리즘)와 밀집 임베딩 기반 검색기는 각각의 장점을 결합하여, 키워드 기반 검색과 의미적 검색을 조합한 하이브리드 검색 시스템을 구축하는 데 사용됩니다. 이를 통해 검색 정확도와 관련성을 동시에 높이는 것이 핵심 목표입니다.\n관련 엔티티: BM25 and dense embedding retrievers, hybrid search\n\n[관련 단락]\nBM25 (Best Matching 25) is a probabilistic ranking function used by search engines to estimate the relevance of documents to a given search query. It is the de-facto standard sparse retriever, building on TF-IDF with term frequency saturation and length normalization. BM25 remains a strong baseline often combined with dense embedding retrievers in hybrid search.",
+        "[커뮤니티 #32] \"임베딩 비교\"는 주로 텍스트, 이미지, 또는 기타 데이터 유형 간의 임베딩(벡터 표현)을 분석하고 비교하는 주제를 다룹니다. 이는 유사도 측정, 클러스터링, 또는 모델 성능 평가 등에 활용될 수 있습니다. 주로 머신러닝, 자연어 처리, 또는 컴퓨터 비전 분야에서 사용됩니다.\n관련 엔티티: 임베딩 비교\n\n[관련 단락]\nHyDE는 2022년 카네기멜런대 연구진이 제안한 기법으로, 질문 자체가 아닌 LLM이 생성한 가설 답변의 임베딩으로 검색하는 방법입니다. 질문과 답변 텍스트는 어휘/문체가 달라 직접 임베딩 비교가 약할 수 있는데, HyDE는 답변의 어휘 분포를 따라 검색해 의미적 매칭을 강화합니다. 단점은 LLM 호출이 한 번 더 필요해 지연과 비용이 증가한다는 점입니다.",
+        "[커뮤니티 #52] Hypothetical Document Embeddings (HyDE)는 문서 임베딩을 생성하기 위해 가상의 문서를 활용하는 방법론입니다. 이 접근 방식은 실제 문서가 아닌, 질의에 대한 가상의 이상적인 응답을 기반으로 임베딩을 생성하여 정보 검색의 정확도를 높이는 데 중점을 둡니다. HyDE는 특히 희소하거나 복잡한 쿼리에 대한 검색 성능을 개선하는 데 유용합니다.\n관련 엔티티: Hypothetical Document Embeddings (HyDE)\n\n[관련 단락]\nHypothetical Document Embeddings (HyDE), proposed by Gao et al. (2022), generates a hypothetical answer with an LLM and uses its embedding for retrieval. The hypothetical answer shares vocabulary distribution with relevant documents, improving semantic matching when query-document style differs.",
+        "[커뮤니티 #29] 카네기멜런대학교(Carnegie Mellon University)는 미국의 명문 사립 연구 대학으로, 컴퓨터 과학, 공학, 예술 분야에서 세계적인 명성을 자랑합니다. 특히 인공지능, 로봇공학,戏剧(연극) 분야에서 두각을 나타내고 있습니다. 1900년에 설립된 이 대학은 혁신적인 연구와 교육으로 글로벌 리더 양성에 주력하고 있습니다.\n관련 엔티티: 카네기멜런대\n\n[관련 단락]\nHyDE는 2022년 카네기멜런대 연구진이 제안한 기법으로, 질문 자체가 아닌 LLM이 생성한 가설 답변의 임베딩으로 검색하는 방법입니다. 질문과 답변 텍스트는 어휘/문체가 달라 직접 임베딩 비교가 약할 수 있는데, HyDE는 답변의 어휘 분포를 따라 검색해 의미적 매칭을 강화합니다. 단점은 LLM 호출이 한 번 더 필요해 지연과 비용이 증가한다는 점입니다."
+      ],
+      "response": "BGE-M3 임베딩 모델은 **베이징지능과학원(BAAI)**이 **2024년** 공개했습니다. 특징은 다음과 같습니다:\n\n- **M3**는 **Multi-Functionality(다기능), Multi-Linguality(다국어), Multi-Granularity(다중Granularity)**의 약자로, **dense, sparse, multi-vector** 세 가지 검색 방식을 한 모델로 지원합니다.\n- **100여 개 언어**를 다루며, 한국어 성능도 우수해 한국어 RAG 베이스라인으로 자주 사용됩니다.\n- **8K 토큰 길이**까지 처리 가능하며, 로컬 실행이 가능해 API 비용 부담이 없습니다.",
+      "reference": "BGE-M3는 베이징지능과학원(BAAI)이 2024년 공개한 다국어 임베딩 모델입니다. dense, sparse, multi-vector 세 가지 검색 방식을 한 모델로 지원하며 100여 개 언어를 다루고 8K 토큰 길이까지 처리 가능합니다.",
+      "faithfulness": 1.0,
+      "context_precision": 0.9999999999,
+      "context_recall": 1.0,
+      "answer_relevancy": 0.6841347813606262
+    },
+    {
+      "user_input": "HyDE가 일반 RAG보다 검색 품질을 높이는 원리는 무엇입니까?",
+      "retrieved_contexts": [
+        "[커뮤니티 #52] Hypothetical Document Embeddings (HyDE)는 문서 임베딩을 생성하기 위해 가상의 문서를 활용하는 방법론입니다. 이 접근 방식은 실제 문서가 아닌, 질의에 대한 가상의 이상적인 응답을 기반으로 임베딩을 생성하여 정보 검색의 정확도를 높이는 데 중점을 둡니다. HyDE는 특히 희소하거나 복잡한 쿼리에 대한 검색 성능을 개선하는 데 유용합니다.\n관련 엔티티: Hypothetical Document Embeddings (HyDE)\n\n[관련 단락]\nHypothetical Document Embeddings (HyDE), proposed by Gao et al. (2022), generates a hypothetical answer with an LLM and uses its embedding for retrieval. The hypothetical answer shares vocabulary distribution with relevant documents, improving semantic matching when query-document style differs.",
+        "[커뮤니티 #1] 이 주제는 **검색 증강 생성(RAG, Retrieval-Augmented Generation)** 시스템의 최신 기술 동향과 그 구성 요소, 평가 방법, 그리고 다국어·다중 문서 처리 최적화에 초점을 맞추고 있습니다. 특히 **BM25(확률적 랭킹 모델)와 임베딩 기반 검색(dense/sparse/multi-vector)의 하이브리드 접근법**, **BGE-M3와 같은 다기능·다국어·다중Granularity 임베딩 모델**, 그리고 **RAGAS·RRF(Reciprocal Rank Fusion) 등 평가 및 재랭킹 기법**이 핵심입니다. 또한 **형태소 분석(Kiwi/Mecab-ko/Nori)이나 계층적 청킹(RAPTOR, Parent-Child 전략)**을 통한 한국어/다국어 지원, **GraphRAG·Knowledge Graph 기반 지식 그래프 활용**, **Prompt Caching·LLM-as-judge 등 비용·지연 최적화**까지 포괄하는 종합적인 RAG 파이프라인 구축과 운영에 대한 논의가 이루어지고 있습니다.\n관련 엔티티: 1-2문장, 1/(k + rank), 100여 개 언어, 1990년대 영국 정보검색 연구진, 1차 검색 결과, 2020, 2022년, 2023, 2023년, 2024\n\n[관련 단락]\n검색 증강 생성(Retrieval-Augmented Generation, RAG)은 대형 언어 모델이 외부 지식 베이스를 참조하여 답변을 생성하는 기법입니다. 2020년 Facebook AI Research가 발표한 논문에서 처음 제안되었으며, 모델 자체의 매개변수에 저장된 지식만으로 답하는 방식의 한계(환각, 지식 만료)를 보완합니다. RAG 파이프라인은 일반적으로 1) 문서 인덱싱, 2) 질문에 대한 검색, 3) 검색된 문서를 컨텍스트로 LLM 호출의 세 단계로 구성됩니다.\n\nBM25(Best Matching 25)는 정보 검색에서 문서와 질의의 관련도를 계산하는 확률적 모델 기반 랭킹 함수입니다. TF-IDF의 발전된 형태로, 1990년대 영국 정보검색 연구진 Stephen Robertson과 Karen Spärck Jones가 개발했습니다. 한국어에 적용할 때는 형태소 분석이 필수이며, Kiwi, Mecab-ko, Nori 같은 분석기가 많이 사용됩니다. RAG의 하이브리드 검색에서는 BM25의 어휘 일치 강점과 임베딩의 의미 일치 강점을 결합합니다.\n\nBGE-M3는 베이징지능과학원(BAAI)이 2024년 공개한 다국어 임베딩 모델입니다. M3는 Multi-Functionality, Multi-Linguality, Multi-Granularity의 약자로 dense, sparse, multi-vector 세 가지 검색 방식을 한 모델로 지원합니다. 100여 개 언어를 다루며 한국어 성능도 우수해 한국어 RAG 베이스라인으로 자주 사용됩니다. 8K 토큰 길이까지 처리 가능하며 로컬 실행이 가능해 API 비용 부담이 없습니다.\n\nHyDE는 2022년 카네기멜런대 연구진이 제안한 기법으로, 질문 자체가 아닌 LLM이 생성한 가설 답변의 임베딩으로 검색하는 방법입니다. 질문과 답변 텍스트는 어휘/문체가 달라 직접 임베딩 비교가 약할 수 있는데, HyDE는 답변의 어휘 분포를 따라 검색해 의미적 매칭을 강화합니다. 단점은 LLM 호출이 한 번 더 필요해 지연과 비용이 증가한다는 점입니다.\n\nReranking은 1차 검색 결과 수십 개를 cross-encoder 모델로 재정렬해 정밀도를 높이는 기법입니다. Bi-encoder가 질의/문서를 독립 임베딩하는 데 비해 cross-encoder는 둘을 함께 보고 점수를 매겨 정확도가 높지만 비용이 큽니다. BGE-reranker-v2-m3는 다국어 reranker로 한국어/영어를 모두 다루며 무료로 로컬 실행 가능합니다. 보통 1차로 30-50개 검색 후 reranker로 top-5를 추리는 패턴이 일반적입니다.",
+        "[커뮤니티 #0] 2020년 Facebook AI Research에서 발표한 논문은 검색 증강 생성(RAG)을 제안했는데, 이는 대형 언어 모델이 외부 지식 베이스에 접근해 답변의 환각이나 지식 만료 같은 한계를 보완하도록 설계된 방법론입니다. RAG는 언어 모델의 정확성과 신뢰성을 높이기 위해 외부 지식을 실시간으로 검색·활용하는 기술로, AI 연구에서 주목받고 있습니다.\n관련 엔티티: 2020년, Facebook AI Research, 검색 증강 생성(Retrieval-Augmented Generation, RAG), 논문, 대형 언어 모델, 외부 지식 베이스, 한계(환각, 지식 만료)\n\n[관련 단락]\n검색 증강 생성(Retrieval-Augmented Generation, RAG)은 대형 언어 모델이 외부 지식 베이스를 참조하여 답변을 생성하는 기법입니다. 2020년 Facebook AI Research가 발표한 논문에서 처음 제안되었으며, 모델 자체의 매개변수에 저장된 지식만으로 답하는 방식의 한계(환각, 지식 만료)를 보완합니다. RAG 파이프라인은 일반적으로 1) 문서 인덱싱, 2) 질문에 대한 검색, 3) 검색된 문서를 컨텍스트로 LLM 호출의 세 단계로 구성됩니다.",
+        "[커뮤니티 #13] CRAG는 불완전한 검색 결과(imperfect retrieval)로부터 발생할 수 있는 문제들에 대응하여 시스템의 견고성(robustness)을 강화하는 역할을 한다. 즉, CRAG는 검색의 오류나 불완전성에도 불구하고 시스템이 안정적으로 기능을 유지할 수 있도록 개선하는 메커니즘으로 볼 수 있다.\n관련 엔티티: CRAG, imperfect retrieval, robustness\n\n[관련 단락]\nCorrective RAG (Yan et al., 2024) evaluates retrieved documents with a lightweight retrieval evaluator and triggers corrective actions: confident, ambiguous, or incorrect. When confidence is low, it falls back to web search; when ambiguous, it knowledge-refines via decomposition and recomposition. CRAG improves robustness to imperfect retrieval.",
+        "[커뮤니티 #5] Reciprocal Rank Fusion(RRF)은 검색 결과 통합에 사용되는 방법으로, 여러 검색 엔진이나 알고리즘의 결과를 결합하여 더 정확하고 포괄적인 검색 결과를 제공합니다. 이를 통해 개별 시스템의 한계를 보완하고, 사용자에게 더 신뢰성 높은 검색 결과를 전달할 수 있습니다.\n관련 엔티티: Reciprocal Rank Fusion(RRF), 검색 결과 통합\n\n[관련 단락]\nMulti-query 기법은 사용자 질문 하나를 LLM으로 여러 표현/관점의 질문으로 확장해 각각 검색한 뒤 결과를 합칩니다. 사용자 질문이 짧거나 모호할 때 회수율(Recall)을 높이는 효과가 있으며, 검색 결과 통합에는 Reciprocal Rank Fusion(RRF)이 자주 사용됩니다. LangChain의 MultiQueryRetriever가 대표적인 구현입니다."
+      ],
+      "response": "HyDE는 **질문 자체의 임베딩이 아닌, LLM이 생성한 가상의 이상적인 답변(가설 답변)의 임베딩을 기반으로 검색을 수행**한다는 점에서 일반 RAG와 차별화됩니다.\n\n구체적으로, **질문과 문서의 어휘/문체가 달라 직접 임베딩 비교가 약할 수 있는 경우**, HyDE는 LLM이 생성한 가설 답변의 어휘 분포를 따라 검색을 수행하여 **의미적 매칭(semantic matching)을 강화**합니다. 예를 들어, 질문이 \"인공지능의 역사적 배경은?\"이라면, LLM이 생성한 가설 답변(예: \"인공지능은 1950년대 앨런 튜링의 튜링 테스트 제안 이후...\")을 임베딩하여与此 유사한 실제 문서를 검색하는 방식입니다.\n\n이로 인해 **희소하거나 복잡한 쿼리(예: 모호한 질문, 전문 용어가 포함된 질문)에 대한 검색 정확도가 향상**됩니다. 반면, 일반 RAG는 질문의 임베딩만으로 검색을 수행하므로, 질문의 표현 방식이 문서와 다를 경우 성능이 저하될 수 있습니다.\n\n[출처: (1) 커뮤니티 #52, 관련 단락]",
+      "reference": "HyDE는 질문이 아닌 LLM이 생성한 가설 답변의 임베딩으로 검색합니다. 답변의 어휘 분포가 실제 문서와 유사해 의미적 매칭이 강화됩니다.",
+      "faithfulness": 0.8461538461538461,
+      "context_precision": 0.99999999995,
+      "context_recall": 1.0,
+      "answer_relevancy": 0.6918037533760071
+    },
+    {
+      "user_input": "Reciprocal Rank Fusion에서 점수는 어떻게 계산되며 상수 k의 기본값은?",
+      "retrieved_contexts": [
+        "[커뮤니티 #5] Reciprocal Rank Fusion(RRF)은 검색 결과 통합에 사용되는 방법으로, 여러 검색 엔진이나 알고리즘의 결과를 결합하여 더 정확하고 포괄적인 검색 결과를 제공합니다. 이를 통해 개별 시스템의 한계를 보완하고, 사용자에게 더 신뢰성 높은 검색 결과를 전달할 수 있습니다.\n관련 엔티티: Reciprocal Rank Fusion(RRF), 검색 결과 통합\n\n[관련 단락]\nMulti-query 기법은 사용자 질문 하나를 LLM으로 여러 표현/관점의 질문으로 확장해 각각 검색한 뒤 결과를 합칩니다. 사용자 질문이 짧거나 모호할 때 회수율(Recall)을 높이는 효과가 있으며, 검색 결과 통합에는 Reciprocal Rank Fusion(RRF)이 자주 사용됩니다. LangChain의 MultiQueryRetriever가 대표적인 구현입니다.",
+        "[커뮤니티 #58] \"1/(k+rank) scores\"는 순위 기반 점수 시스템을 나타내며, 일반적으로 순위(k+rank)에 반비례하는 점수를 부여하는 방식입니다. 이는 순위가 높을수록 점수가 낮아지는 역순위 구조를 의미합니다. 주로 검색 결과, 랭킹 시스템, 또는 경쟁 평가에서 활용될 수 있습니다.\n관련 엔티티: 1/(k+rank) scores\n\n[관련 단락]\nReciprocal Rank Fusion (RRF) combines rankings from multiple retrievers by summing 1/(k+rank) scores. Because it uses ranks rather than raw scores, RRF safely fuses heterogeneous systems like BM25 and dense vectors. It is the standard hybrid-search fusion algorithm.",
+        "[커뮤니티 #14] 이 문서는 **Core metrics**(핵심 평가 지표)가 무엇인지 설명하며, 특히 **faithfulness**(신뢰성), **answer relevancy**(답변 관련성), **context precision**(맥락 정확성), **context recall**(맥락 재현율)을 포함한다는 점을 강조합니다. 이러한 지표들은 질의응답 시스템이나 AI 모델의 성능을 객관적으로 평가하는 데 사용됩니다.\n관련 엔티티: Core metrics, answer relevancy, context precision, context recall, faithfulness\n\n[관련 단락]\nRAGAS is an open-source Python framework for evaluating RAG pipelines using LLMs as judges. Core metrics include faithfulness, answer relevancy, context precision, and context recall. RAGAS integrates with LangChain and LlamaIndex; evaluation itself consumes LLM tokens, so cost monitoring is essential.",
+        "[커뮤니티 #6] 이 묶음은 물리학 또는 통계학에서 'k'가 '상수'의 한 종류를 나타내며, 'k'의 '보통 값'이 '60'임을 설명합니다. 즉, 'k'가 특정 상수를 지칭하고, 그 상수의 일반적인 값이 60이라는 의미를 담고 있습니다.\n관련 엔티티: 60, k, 상수\n\n[관련 단락]\nReciprocal Rank Fusion은 여러 검색 시스템의 결과 순위를 결합하는 단순하고 강력한 알고리즘입니다. 각 결과의 점수를 1/(k + rank)로 계산해 합산하며, k는 상수(보통 60)입니다. 점수 스케일이 다른 시스템(BM25 점수와 cosine similarity 등)을 결합할 때 순위만 사용하므로 안전합니다. 하이브리드 검색의 표준 통합 방법으로 자리잡았습니다.",
+        "[커뮤니티 #1] 이 주제는 **검색 증강 생성(RAG, Retrieval-Augmented Generation)** 시스템의 최신 기술 동향과 그 구성 요소, 평가 방법, 그리고 다국어·다중 문서 처리 최적화에 초점을 맞추고 있습니다. 특히 **BM25(확률적 랭킹 모델)와 임베딩 기반 검색(dense/sparse/multi-vector)의 하이브리드 접근법**, **BGE-M3와 같은 다기능·다국어·다중Granularity 임베딩 모델**, 그리고 **RAGAS·RRF(Reciprocal Rank Fusion) 등 평가 및 재랭킹 기법**이 핵심입니다. 또한 **형태소 분석(Kiwi/Mecab-ko/Nori)이나 계층적 청킹(RAPTOR, Parent-Child 전략)**을 통한 한국어/다국어 지원, **GraphRAG·Knowledge Graph 기반 지식 그래프 활용**, **Prompt Caching·LLM-as-judge 등 비용·지연 최적화**까지 포괄하는 종합적인 RAG 파이프라인 구축과 운영에 대한 논의가 이루어지고 있습니다.\n관련 엔티티: 1-2문장, 1/(k + rank), 100여 개 언어, 1990년대 영국 정보검색 연구진, 1차 검색 결과, 2020, 2022년, 2023, 2023년, 2024\n\n[관련 단락]\n검색 증강 생성(Retrieval-Augmented Generation, RAG)은 대형 언어 모델이 외부 지식 베이스를 참조하여 답변을 생성하는 기법입니다. 2020년 Facebook AI Research가 발표한 논문에서 처음 제안되었으며, 모델 자체의 매개변수에 저장된 지식만으로 답하는 방식의 한계(환각, 지식 만료)를 보완합니다. RAG 파이프라인은 일반적으로 1) 문서 인덱싱, 2) 질문에 대한 검색, 3) 검색된 문서를 컨텍스트로 LLM 호출의 세 단계로 구성됩니다.\n\nBM25(Best Matching 25)는 정보 검색에서 문서와 질의의 관련도를 계산하는 확률적 모델 기반 랭킹 함수입니다. TF-IDF의 발전된 형태로, 1990년대 영국 정보검색 연구진 Stephen Robertson과 Karen Spärck Jones가 개발했습니다. 한국어에 적용할 때는 형태소 분석이 필수이며, Kiwi, Mecab-ko, Nori 같은 분석기가 많이 사용됩니다. RAG의 하이브리드 검색에서는 BM25의 어휘 일치 강점과 임베딩의 의미 일치 강점을 결합합니다.\n\nBGE-M3는 베이징지능과학원(BAAI)이 2024년 공개한 다국어 임베딩 모델입니다. M3는 Multi-Functionality, Multi-Linguality, Multi-Granularity의 약자로 dense, sparse, multi-vector 세 가지 검색 방식을 한 모델로 지원합니다. 100여 개 언어를 다루며 한국어 성능도 우수해 한국어 RAG 베이스라인으로 자주 사용됩니다. 8K 토큰 길이까지 처리 가능하며 로컬 실행이 가능해 API 비용 부담이 없습니다.\n\nHyDE는 2022년 카네기멜런대 연구진이 제안한 기법으로, 질문 자체가 아닌 LLM이 생성한 가설 답변의 임베딩으로 검색하는 방법입니다. 질문과 답변 텍스트는 어휘/문체가 달라 직접 임베딩 비교가 약할 수 있는데, HyDE는 답변의 어휘 분포를 따라 검색해 의미적 매칭을 강화합니다. 단점은 LLM 호출이 한 번 더 필요해 지연과 비용이 증가한다는 점입니다.\n\nReranking은 1차 검색 결과 수십 개를 cross-encoder 모델로 재정렬해 정밀도를 높이는 기법입니다. Bi-encoder가 질의/문서를 독립 임베딩하는 데 비해 cross-encoder는 둘을 함께 보고 점수를 매겨 정확도가 높지만 비용이 큽니다. BGE-reranker-v2-m3는 다국어 reranker로 한국어/영어를 모두 다루며 무료로 로컬 실행 가능합니다. 보통 1차로 30-50개 검색 후 reranker로 top-5를 추리는 패턴이 일반적입니다."
+      ],
+      "response": "Reciprocal Rank Fusion(RRF)에서 점수는 **1/(k + rank)**로 계산되며, 상수 **k의 기본값은 60**입니다.\n\n(참고: 컨텍스트 [커뮤니티 #58], [커뮤니티 #6], [커뮤니티 #5]의 관련 단락에서 확인 가능)",
+      "reference": "RRF는 각 검색 결과의 점수를 1/(k + rank)로 계산해 합산합니다. k의 기본값은 60입니다.",
+      "faithfulness": 1.0,
+      "context_precision": 0.5333333333155555,
+      "context_recall": 1.0,
+      "answer_relevancy": 0.8259061574935913
+    }
+  ],
+  "usage": {
+    "indexing": {
+      "by_model": {
+        "mistral-small-latest": {
+          "model": "mistral-small-latest",
+          "calls": 92,
+          "input_tokens": 14000,
+          "output_tokens": 14974,
+          "cost_usd": 0.0,
+          "elapsed_seconds": 310.1236383136129
+        }
+      },
+      "totals": {
+        "calls": 92,
+        "input_tokens": 14000,
+        "output_tokens": 14974,
+        "cost_usd": 0.0,
+        "elapsed_seconds": 310.124
+      }
+    },
+    "inference": {
+      "by_model": {
+        "mistral-small-latest": {
+          "model": "mistral-small-latest",
+          "calls": 3,
+          "input_tokens": 5920,
+          "output_tokens": 539,
+          "cost_usd": 0.0,
+          "elapsed_seconds": 6.859441572916694
+        }
+      },
+      "totals": {
+        "calls": 3,
+        "input_tokens": 5920,
+        "output_tokens": 539,
+        "cost_usd": 0.0,
+        "elapsed_seconds": 6.859
+      }
+    }
+  },
+  "meta": {
+    "technique": "10-graphrag",
+    "top_k": 5,
+    "n_questions": 3,
+    "gen_llm_model": "mistral-small-latest",
+    "eval_llm_model": "mistral-large-latest",
+    "timestamp": "2026-06-01T02:07:22"
+  }
+}

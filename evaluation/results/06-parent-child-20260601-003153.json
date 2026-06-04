@@ -1,0 +1,97 @@
+{
+  "summary": {
+    "faithfulness": 0.9347826086956521,
+    "context_precision": 0.9999999999166667,
+    "context_recall": 1.0,
+    "answer_relevancy": 0.7485915819803873
+  },
+  "by_question": [
+    {
+      "user_input": "BGE-M3 임베딩 모델은 누가 언제 공개했고 어떤 특징을 가집니까?",
+      "retrieved_contexts": [
+        "BGE-M3는 베이징지능과학원(BAAI)이 2024년 공개한 다국어 임베딩 모델입니다. M3는 Multi-Functionality, Multi-Linguality, Multi-Granularity의 약자로 dense, sparse, multi-vector 세 가지 검색 방식을 한 모델로 지원합니다. 100여 개 언어를 다루며 한국어 성능도 우수해 한국어 RAG 베이스라인으로 자주 사용됩니다. 8K 토큰 길이까지 처리 가능하며 로컬 실행이 가능해 API 비용 부담이 없습니다.",
+        "BM25 (Best Matching 25) is a probabilistic ranking function used by search engines to estimate the relevance of documents to a given search query. It is the de-facto standard sparse retriever, building on TF-IDF with term frequency saturation and length normalization. BM25 remains a strong baseline often combined with dense embedding retrievers in hybrid search.",
+        "BM25(Best Matching 25)는 정보 검색에서 문서와 질의의 관련도를 계산하는 확률적 모델 기반 랭킹 함수입니다. TF-IDF의 발전된 형태로, 1990년대 영국 정보검색 연구진 Stephen Robertson과 Karen Spärck Jones가 개발했습니다. 한국어에 적용할 때는 형태소 분석이 필수이며, Kiwi, Mecab-ko, Nori 같은 분석기가 많이 사용됩니다. RAG의 하이브리드 검색에서는 BM25의 어휘 일치 강점과 임베딩의 의미 일치 강점을 결합합니다.",
+        "Qdrant is an open-source vector search engine written in Rust. It supports payload filtering, hybrid dense-sparse search, and runs easily via Docker. Qdrant strikes a balance between Chroma's simplicity and Elasticsearch's feature depth, making it a popular default for production RAG.",
+        "HyDE는 2022년 카네기멜런대 연구진이 제안한 기법으로, 질문 자체가 아닌 LLM이 생성한 가설 답변의 임베딩으로 검색하는 방법입니다. 질문과 답변 텍스트는 어휘/문체가 달라 직접 임베딩 비교가 약할 수 있는데, HyDE는 답변의 어휘 분포를 따라 검색해 의미적 매칭을 강화합니다. 단점은 LLM 호출이 한 번 더 필요해 지연과 비용이 증가한다는 점입니다."
+      ],
+      "response": "BGE-M3는 베이징지능과학원(BAAI)이 2024년에 공개한 다국어 임베딩 모델입니다. 특징은 다음과 같습니다:\n\n- **M3**는 **Multi-Functionality**, **Multi-Linguality**, **Multi-Granularity**의 약자로, **dense**, **sparse**, **multi-vector** 세 가지 검색 방식을 한 모델로 지원합니다.\n- 100여 개 언어를 다루며, 한국어 성능이 우수해 한국어 RAG 베이스라인으로 자주 사용됩니다.\n- 8K 토큰 길이까지 처리 가능하며, 로컬 실행이 가능해 API 비용 부담이 없습니다.",
+      "reference": "BGE-M3는 베이징지능과학원(BAAI)이 2024년 공개한 다국어 임베딩 모델입니다. dense, sparse, multi-vector 세 가지 검색 방식을 한 모델로 지원하며 100여 개 언어를 다루고 8K 토큰 길이까지 처리 가능합니다.",
+      "faithfulness": NaN,
+      "context_precision": 0.9999999999,
+      "context_recall": 1.0,
+      "answer_relevancy": 0.697034478187561
+    },
+    {
+      "user_input": "HyDE가 일반 RAG보다 검색 품질을 높이는 원리는 무엇입니까?",
+      "retrieved_contexts": [
+        "HyDE는 2022년 카네기멜런대 연구진이 제안한 기법으로, 질문 자체가 아닌 LLM이 생성한 가설 답변의 임베딩으로 검색하는 방법입니다. 질문과 답변 텍스트는 어휘/문체가 달라 직접 임베딩 비교가 약할 수 있는데, HyDE는 답변의 어휘 분포를 따라 검색해 의미적 매칭을 강화합니다. 단점은 LLM 호출이 한 번 더 필요해 지연과 비용이 증가한다는 점입니다.",
+        "검색 증강 생성(Retrieval-Augmented Generation, RAG)은 대형 언어 모델이 외부 지식 베이스를 참조하여 답변을 생성하는 기법입니다. 2020년 Facebook AI Research가 발표한 논문에서 처음 제안되었으며, 모델 자체의 매개변수에 저장된 지식만으로 답하는 방식의 한계(환각, 지식 만료)를 보완합니다. RAG 파이프라인은 일반적으로 1) 문서 인덱싱, 2) 질문에 대한 검색, 3) 검색된 문서를 컨텍스트로 LLM 호출의 세 단계로 구성됩니다.",
+        "GraphRAG, released by Microsoft in 2024, builds a knowledge graph from documents using LLMs to extract entities and relationships. Community detection clusters the graph into themes, each summarized for retrieval. GraphRAG excels at holistic, summary-style questions but has high indexing cost compared to chunk-based RAG.",
+        "Qdrant is an open-source vector search engine written in Rust. It supports payload filtering, hybrid dense-sparse search, and runs easily via Docker. Qdrant strikes a balance between Chroma's simplicity and Elasticsearch's feature depth, making it a popular default for production RAG.",
+        "Retrieval-Augmented Generation (RAG) is a technique introduced by Lewis et al. (Facebook AI, 2020) that augments large language models with external knowledge retrieval. Instead of relying solely on parameters, the model retrieves relevant passages from a corpus and conditions its output on them. RAG mitigates hallucinations and stale knowledge in LLMs."
+      ],
+      "response": "HyDE는 **질문 자체의 임베딩이 아닌, LLM이 생성한 가설 답변의 임베딩을 검색에 활용**한다는 점에서 일반 RAG와 차별화됩니다. 구체적으로 다음과 같은 원리로 검색 품질을 높입니다:\n\n1. **의미적 매칭 강화**:\n   - 질문과 답변 텍스트는 어휘/문체가 달라 직접 임베딩 비교가 약할 수 있지만, HyDE는 LLM이 생성한 **가설 답변의 어휘 분포를 따라 검색**하여 의미적 유사성을 높입니다.\n   - 예를 들어, 질문이 \"2020년 RAG 논문의 핵심 기여는?\"이라면, LLM이 생성한 가설 답변(\"RAG는 외부 지식 베이스를 참조하여 환각과 지식 만료 문제를 해결한다\")을 임베딩으로 사용해 관련 문서를 검색합니다.\n\n2. **질문-답변 간 어휘 격차 해소**:\n   - 일반 RAG는 질문의 임베딩만으로 검색하므로, 질문이 구체적이지 않거나 어휘가 달라 검색 품질이 떨어질 수 있습니다. 반면 HyDE는 **LLM이 생성한 답변 형식의 임베딩**을 사용해 검색 범위를 좁히고 정확도를 높입니다.\n\n[단점]\n- LLM 호출이 한 번 더 필요해 **지연과 비용이 증가**한다는 점은 일반 RAG에 비해 단점으로 작용합니다.\n\n**정리**: HyDE는 LLM의 가설 답변을 매개로 검색 임베딩을 생성해 **질문과 문서 간 의미적 매칭을 강화**하는 원리로 검색 품질을 높입니다.",
+      "reference": "HyDE는 질문이 아닌 LLM이 생성한 가설 답변의 임베딩으로 검색합니다. 답변의 어휘 분포가 실제 문서와 유사해 의미적 매칭이 강화됩니다.",
+      "faithfulness": 0.8695652173913043,
+      "context_precision": 0.9999999999,
+      "context_recall": 1.0,
+      "answer_relevancy": 0.7342650890350342
+    },
+    {
+      "user_input": "Reciprocal Rank Fusion에서 점수는 어떻게 계산되며 상수 k의 기본값은?",
+      "retrieved_contexts": [
+        "Reciprocal Rank Fusion은 여러 검색 시스템의 결과 순위를 결합하는 단순하고 강력한 알고리즘입니다. 각 결과의 점수를 1/(k + rank)로 계산해 합산하며, k는 상수(보통 60)입니다. 점수 스케일이 다른 시스템(BM25 점수와 cosine similarity 등)을 결합할 때 순위만 사용하므로 안전합니다. 하이브리드 검색의 표준 통합 방법으로 자리잡았습니다.",
+        "Reciprocal Rank Fusion (RRF) combines rankings from multiple retrievers by summing 1/(k+rank) scores. Because it uses ranks rather than raw scores, RRF safely fuses heterogeneous systems like BM25 and dense vectors. It is the standard hybrid-search fusion algorithm.",
+        "Multi-query 기법은 사용자 질문 하나를 LLM으로 여러 표현/관점의 질문으로 확장해 각각 검색한 뒤 결과를 합칩니다. 사용자 질문이 짧거나 모호할 때 회수율(Recall)을 높이는 효과가 있으며, 검색 결과 통합에는 Reciprocal Rank Fusion(RRF)이 자주 사용됩니다. LangChain의 MultiQueryRetriever가 대표적인 구현입니다.",
+        "BM25(Best Matching 25)는 정보 검색에서 문서와 질의의 관련도를 계산하는 확률적 모델 기반 랭킹 함수입니다. TF-IDF의 발전된 형태로, 1990년대 영국 정보검색 연구진 Stephen Robertson과 Karen Spärck Jones가 개발했습니다. 한국어에 적용할 때는 형태소 분석이 필수이며, Kiwi, Mecab-ko, Nori 같은 분석기가 많이 사용됩니다. RAG의 하이브리드 검색에서는 BM25의 어휘 일치 강점과 임베딩의 의미 일치 강점을 결합합니다.",
+        "Reranking은 1차 검색 결과 수십 개를 cross-encoder 모델로 재정렬해 정밀도를 높이는 기법입니다. Bi-encoder가 질의/문서를 독립 임베딩하는 데 비해 cross-encoder는 둘을 함께 보고 점수를 매겨 정확도가 높지만 비용이 큽니다. BGE-reranker-v2-m3는 다국어 reranker로 한국어/영어를 모두 다루며 무료로 로컬 실행 가능합니다. 보통 1차로 30-50개 검색 후 reranker로 top-5를 추리는 패턴이 일반적입니다."
+      ],
+      "response": "Reciprocal Rank Fusion(RRF)에서 점수는 **1/(k + rank)**로 계산되며, 상수 **k의 기본값은 60**입니다.",
+      "reference": "RRF는 각 검색 결과의 점수를 1/(k + rank)로 계산해 합산합니다. k의 기본값은 60입니다.",
+      "faithfulness": 1.0,
+      "context_precision": 0.99999999995,
+      "context_recall": 1.0,
+      "answer_relevancy": 0.8144751787185669
+    }
+  ],
+  "usage": {
+    "indexing": {
+      "by_model": {},
+      "totals": {
+        "calls": 0,
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "cost_usd": 0,
+        "elapsed_seconds": 0
+      }
+    },
+    "inference": {
+      "by_model": {
+        "mistral-small-latest": {
+          "model": "mistral-small-latest",
+          "calls": 3,
+          "input_tokens": 1893,
+          "output_tokens": 559,
+          "cost_usd": 0.0,
+          "elapsed_seconds": 6.8998612579889596
+        }
+      },
+      "totals": {
+        "calls": 3,
+        "input_tokens": 1893,
+        "output_tokens": 559,
+        "cost_usd": 0.0,
+        "elapsed_seconds": 6.9
+      }
+    }
+  },
+  "meta": {
+    "technique": "06-parent-child",
+    "top_k": 5,
+    "n_questions": 3,
+    "gen_llm_model": "mistral-small-latest",
+    "eval_llm_model": "mistral-large-latest",
+    "timestamp": "2026-06-01T00:31:53"
+  }
+}

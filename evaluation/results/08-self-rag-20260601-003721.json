@@ -1,0 +1,87 @@
+{
+  "summary": {
+    "faithfulness": 0.9743589743589745,
+    "context_precision": 0.9999999999333333,
+    "context_recall": 1.0,
+    "answer_relevancy": 0.7304027875264486
+  },
+  "by_question": [
+    {
+      "user_input": "BGE-M3 임베딩 모델은 누가 언제 공개했고 어떤 특징을 가집니까?",
+      "retrieved_contexts": [
+        "BGE-M3는 베이징지능과학원(BAAI)이 2024년 공개한 다국어 임베딩 모델입니다. M3는 Multi-Functionality, Multi-Linguality, Multi-Granularity의 약자로 dense, sparse, multi-vector 세 가지 검색 방식을 한 모델로 지원합니다. 100여 개 언어를 다루며 한국어 성능도 우수해 한국어 RAG 베이스라인으로 자주 사용됩니다. 8K 토큰 길이까지 처리 가능하며 로컬 실행이 가능해 API 비용 부담이 없습니다."
+      ],
+      "response": "BGE-M3 임베딩 모델은 베이징지능과학원(BAAI)이 2024년에 공개한 모델입니다. 특징은 다음과 같습니다:\n\n1. **다기능성(Multi-Functionality)**: dense, sparse, multi-vector 세 가지 검색 방식을 한 모델로 지원합니다.\n2. **다국어 지원(Multi-Linguality)**: 100여 개 언어를 다루며, 한국어 성능도 우수합니다.\n3. **다단계 처리(Multi-Granularity)**: 8K 토큰 길이까지 처리 가능합니다.\n4. **로컬 실행 가능**: API 비용 부담이 없습니다.",
+      "reference": "BGE-M3는 베이징지능과학원(BAAI)이 2024년 공개한 다국어 임베딩 모델입니다. dense, sparse, multi-vector 세 가지 검색 방식을 한 모델로 지원하며 100여 개 언어를 다루고 8K 토큰 길이까지 처리 가능합니다.",
+      "faithfulness": 0.9230769230769231,
+      "context_precision": 0.9999999999,
+      "context_recall": 1.0,
+      "answer_relevancy": 0.7212975025177002
+    },
+    {
+      "user_input": "HyDE가 일반 RAG보다 검색 품질을 높이는 원리는 무엇입니까?",
+      "retrieved_contexts": [
+        "HyDE는 2022년 카네기멜런대 연구진이 제안한 기법으로, 질문 자체가 아닌 LLM이 생성한 가설 답변의 임베딩으로 검색하는 방법입니다. 질문과 답변 텍스트는 어휘/문체가 달라 직접 임베딩 비교가 약할 수 있는데, HyDE는 답변의 어휘 분포를 따라 검색해 의미적 매칭을 강화합니다. 단점은 LLM 호출이 한 번 더 필요해 지연과 비용이 증가한다는 점입니다.",
+        "Hypothetical Document Embeddings (HyDE), proposed by Gao et al. (2022), generates a hypothetical answer with an LLM and uses its embedding for retrieval. The hypothetical answer shares vocabulary distribution with relevant documents, improving semantic matching when query-document style differs."
+      ],
+      "response": "HyDE는 **LLM이 생성한 가설 답변(hypothetical answer)의 임베딩을 검색에 활용**한다는 점에서 일반 RAG와 차별화됩니다. 구체적으로, 일반 RAG는 질문의 임베딩을 직접 문서 임베딩과 비교하는 반면, HyDE는 **LLM이 생성한 가설 답변이 실제 관련 문서들과 유사한 어휘 분포를 갖도록 유도**하여, 질문의 어휘/문체와 문서의 어휘가 상이하더라도 **의미적 매칭을 강화**합니다. 즉, 가설 답변의 임베딩이 검색 쿼리 역할을 대신하여 관련 문서를 더 효과적으로 찾아내는 원리입니다.\n\n(컨텍스트 (1)과 (2)에서 명시된 내용을 바탕으로 정리했습니다.)",
+      "reference": "HyDE는 질문이 아닌 LLM이 생성한 가설 답변의 임베딩으로 검색합니다. 답변의 어휘 분포가 실제 문서와 유사해 의미적 매칭이 강화됩니다.",
+      "faithfulness": 1.0,
+      "context_precision": 0.99999999995,
+      "context_recall": 1.0,
+      "answer_relevancy": 0.6585264205932617
+    },
+    {
+      "user_input": "Reciprocal Rank Fusion에서 점수는 어떻게 계산되며 상수 k의 기본값은?",
+      "retrieved_contexts": [
+        "Reciprocal Rank Fusion은 여러 검색 시스템의 결과 순위를 결합하는 단순하고 강력한 알고리즘입니다. 각 결과의 점수를 1/(k + rank)로 계산해 합산하며, k는 상수(보통 60)입니다. 점수 스케일이 다른 시스템(BM25 점수와 cosine similarity 등)을 결합할 때 순위만 사용하므로 안전합니다. 하이브리드 검색의 표준 통합 방법으로 자리잡았습니다.",
+        "Reciprocal Rank Fusion (RRF) combines rankings from multiple retrievers by summing 1/(k+rank) scores. Because it uses ranks rather than raw scores, RRF safely fuses heterogeneous systems like BM25 and dense vectors. It is the standard hybrid-search fusion algorithm."
+      ],
+      "response": "Reciprocal Rank Fusion(RRF)에서 각 결과의 점수는 **1/(k + rank)**로 계산됩니다. 상수 **k의 기본값은 60**입니다.\n\n(컨텍스트 (1)과 (2)에서 모두 동일하게 설명되어 있습니다.)",
+      "reference": "RRF는 각 검색 결과의 점수를 1/(k + rank)로 계산해 합산합니다. k의 기본값은 60입니다.",
+      "faithfulness": 1.0,
+      "context_precision": 0.99999999995,
+      "context_recall": 1.0,
+      "answer_relevancy": 0.8113844394683838
+    }
+  ],
+  "usage": {
+    "indexing": {
+      "by_model": {},
+      "totals": {
+        "calls": 0,
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "cost_usd": 0,
+        "elapsed_seconds": 0
+      }
+    },
+    "inference": {
+      "by_model": {
+        "mistral-small-latest": {
+          "model": "mistral-small-latest",
+          "calls": 36,
+          "input_tokens": 7128,
+          "output_tokens": 477,
+          "cost_usd": 0.0,
+          "elapsed_seconds": 24.213711016462184
+        }
+      },
+      "totals": {
+        "calls": 36,
+        "input_tokens": 7128,
+        "output_tokens": 477,
+        "cost_usd": 0.0,
+        "elapsed_seconds": 24.214
+      }
+    }
+  },
+  "meta": {
+    "technique": "08-self-rag",
+    "top_k": 5,
+    "n_questions": 3,
+    "gen_llm_model": "mistral-small-latest",
+    "eval_llm_model": "mistral-large-latest",
+    "timestamp": "2026-06-01T00:37:21"
+  }
+}
