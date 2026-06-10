@@ -1,6 +1,10 @@
 # RAG Frame
 
-RAG (Retrieval-Augmented Generation) 기법 7종을 한 곳에서 비교하고 RAGAS로 정량 평가하는 학습용 레퍼런스 갤러리입니다.
+RAG (Retrieval-Augmented Generation) 기법 13종을 한 곳에서 비교하고 RAGAS로 정량 평가하는 학습용 레퍼런스 갤러리입니다.
+
+![기법 비교 대시보드](docs/img/designsite_compare.png)
+
+13개 기법의 RAGAS 4 메트릭 (충실도 / 적합성 / 정확도 / 완전성) 순위와 매트릭스를 한 눈에 비교하고, 기법별 디테일과 레이더 차트로 강약점을 살펴볼 수 있습니다.
 
 ## 1. 이 레포의 목적
 
@@ -38,9 +42,10 @@ V2 - 자가 교정/구조 인덱싱/에이전트
 ├── techniques/             기법별 독립 구현 13개 (RAG 인터페이스 통일)
 ├── evaluation/             RAGAS 평가 하네스 + 비교 도구
 ├── dashboard/              Streamlit 비교 대시보드 (V3)
-├── docs/                   설계 문서 + 기법 비교 + 통합 references
-├── scripts/                초기화/데이터 다운로드 스크립트
-├── docker-compose.yml      Qdrant 벡터 DB 컨테이너
+├── designsite/             정적 비교 대시보드 (V5, React + Babel CDN)
+├── docs/                   설계 문서 + 기법 비교 + 통합 references (캡처 이미지 포함)
+├── scripts/                초기화/데이터 다운로드/디자인 데이터 빌드 스크립트
+├── docker-compose.yml      Qdrant 벡터 DB + Streamlit + designsite 컨테이너
 ├── pyproject.toml          uv 패키지 관리
 └── .env.example            API 키 템플릿
 ```
@@ -64,6 +69,7 @@ V2 - 자가 교정/구조 인덱싱/에이전트
    5) `python techniques/01-naive/rag.py` 기법별 단독 실행
    6) `python evaluation/ragas_eval.py --technique 01-naive` 평가 실행
    7) `streamlit run dashboard/app.py` 대시보드 실행 (V3)
+   8) 정적 비교 대시보드 (V5) 실행 — `python scripts/build_design_data.py` 로 designsite/data/rag_data.js 갱신 후 `docker compose up -d designsite`
 
 3. 환경별 명령어 차이
    1) conda + pip 사용자 - 위 명령들 그대로 `python ...`, `streamlit run ...` 으로 호출
@@ -94,6 +100,7 @@ V2 - 자가 교정/구조 인덱싱/에이전트
 ## 7. 다음 단계 (로드맵)
 
 1. V3 (완료) - Streamlit 비교 대시보드 + 평가 결과 시각화 + 토큰/비용 추적
-2. V4 - 한국어 도메인 데이터셋(법률/의료/사내 문서) 확장
-3. V5 - GraphRAG 풀스펙 (Leiden 계층 커뮤니티), RAPTOR GMM/UMAP 변종, prompt caching 적용
-4. V6 - 멀티모달 RAG (이미지/표 포함)
+2. V4 (완료) - 한국어 위키 샘플 데이터셋 (98 docs / 30 questions) + Qwen3.6-27B-FP8 평가 결과 13 기법 적재
+3. V5 (완료) - 정적 비교 대시보드 designsite (React + Babel CDN, 5 페이지 - 기법 비교 / 질문별 결과 / 검색 데모 / 비용 지연 / 가이드)
+4. V6 - GraphRAG 풀스펙 (Leiden 계층 커뮤니티), RAPTOR GMM/UMAP 변종, prompt caching 적용
+5. V7 - 멀티모달 RAG (이미지/표 포함)
