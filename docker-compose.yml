@@ -31,6 +31,15 @@ services:
       - qdrant
     restart: unless-stopped
 
+  designsite:
+    build:
+      context: ./designsite
+      dockerfile: Dockerfile
+    container_name: rag-frame-designsite
+    ports:
+      - "8502:8502"
+    restart: unless-stopped
+
 volumes:
   qdrant_storage:
     name: rag-frame-qdrant-storage

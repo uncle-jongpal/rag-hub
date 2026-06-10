@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>RAG Frame — 기법 비교 대시보드</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="styles/console.css" />
+</head>
+<body>
+<div id="root"></div>
+
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+
+<script src="data/rag_data.js"></script>
+<script src="data/rag_labels.js"></script>
+<script type="text/babel" src="pages/shared.jsx"></script>
+<script type="text/babel" src="pages/Compare.jsx"></script>
+<script type="text/babel" src="pages/Questions.jsx"></script>
+<script type="text/babel" src="pages/Demo.jsx"></script>
+<script type="text/babel" src="pages/Cost.jsx"></script>
+<script type="text/babel" src="pages/Guide.jsx"></script>
+<script type="text/babel" src="tweaks-panel.jsx"></script>
+
+<script type="text/babel" data-presets="react">
+const PAGES = [
+  { id: "compare",   ix: "01", ko: "기법 비교",   en: "Comparison", C: () => window.PageCompare },
+  { id: "questions", ix: "02", ko: "질문별 결과", en: "Per-Question", C: () => window.PageQuestions },
+  { id: "demo",      ix: "03", ko: "검색 데모",   en: "Search", C: () => window.PageDemo },
+  { id: "cost",      ix: "04", ko: "비용·지연",   en: "Cost", C: () => window.PageCost },
+  { id: "guide",     ix: "05", ko: "가이드",      en: "Guide", C: () => window.PageGuide },
+];
+
+const ACCENTS = {
+  "#0f9d76": { rgb: [15, 157, 118], ink: "#0a5e47" },
+  "#4f6bd6": { rgb: [79, 107, 214], ink: "#2f3f87" },
+  "#475569": { rgb: [71, 85, 105], ink: "#2b3445" },
+  "#c7791b": { rgb: [199, 121, 27], ink: "#7d4b12" },
+};
+const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
+  "accent": "#0f9d76",
+  "density": "regular",
+  "colorScale": "mono"
+}/*EDITMODE-END*/;
+
+function App() {
+  const [t, setTweak] = window.useTweaks(TWEAK_DEFAULTS);
+  const [page, setPage] = React.useState(() => localStorage.getItem("ragframe.page") || "compare");
+  React.useEffect(() => { localStorage.setItem("ragframe.page", page); }, [page]);
+
+  const a = ACCENTS[t.accent] || ACCENTS["#0f9d76"];
+  // set globals synchronously so JS-colored cells/radar read fresh values this render
+  window.__ragAccent = a.rgb;
+  window.__ragScale = t.colorScale;
+  React.useEffect(() => {
+    document.body.classList.toggle("compact", t.density === "compact");
+  }, [t.density]);
+
+  const cur = PAGES.find((p) => p.id === page) || PAGES[0];
+  const Page = cur.C();
+  const accentStyle = {
+    "--accent": t.accent, "--accentR": a.rgb.join(","),
+    "--accent-soft": `rgba(${a.rgb.join(",")},.1)`, "--accent-ink": a.ink,
+  };
+
+  return (
+    <div className="app" style={accentStyle}>
+      <div className="topbar">
+        <div className="brand"><span className="dot"></span>RAG&nbsp;Frame <span className="mut">/ 기법 비교 대시보드</span></div>
+        <div className="nav">
+          {PAGES.map((p) => (
+            <button key={p.id} className={"nv" + (p.id === page ? " on" : "")} onClick={() => setPage(p.id)}>
+              <span className="ix mono">{p.ix}</span>{p.ko}
+            </button>
+          ))}
+        </div>
+        <div className="badge mono"><span className="g"></span>{window.RAGLabels.model}</div>
+      </div>
+      {Page ? <Page /> : <div className="wrap"><div className="empty">로드 중…</div></div>}
+
+      <window.TweaksPanel title="Tweaks">
+        <window.TweakSection label="테마 · Theme" />
+        <window.TweakColor label="악센트 · Accent" value={t.accent}
+          options={Object.keys(ACCENTS)} onChange={(v) => setTweak("accent", v)} />
+        <window.TweakRadio label="매트릭 색 스케일" value={t.colorScale}
+          options={["mono", "div"]} onChange={(v) => setTweak("colorScale", v)} />
+        <window.TweakSection label="레이아웃 · Layout" />
+        <window.TweakRadio label="밀도 · Density" value={t.density}
+          options={["regular", "compact"]} onChange={(v) => setTweak("density", v)} />
+      </window.TweaksPanel>
+    </div>
+  );
+}
+
+ReactDOM.createRoot(document.getElementById("root")).render(<App />);
+</script>
+</body>
+</html>
