@@ -1,7 +1,14 @@
+# research-rag — 3컨테이너 구성.
+#   frontend  : 정적 디자인 사이트 (8502). 데모 화면은 backend 를 호출.
+#   backend   : FastAPI. 13개 기법 RAG 실행 (내부 전용, 호스트 포트 미노출).
+#   vectordb  : Qdrant. 임베딩 저장소.
+# 서비스 키(qdrant/backend/frontend)는 내부 DNS 이름으로 쓰이고,
+# container_name 은 표시용 이름(research-rag-*)이다. 볼륨 이름은 기존 데이터 유지를 위해 변경하지 않는다.
+
 services:
   qdrant:
     image: qdrant/qdrant:v1.12.4
-    container_name: rag-frame-qdrant
+    container_name: research-rag-vectordb
     ports:
       - "6333:6333"
       - "6334:6334"
@@ -13,31 +20,32 @@ services:
       QDRANT__SERVICE__GRPC_PORT: 6334
       QDRANT__LOG_LEVEL: INFO
 
-  dashboard:
+  backend:
     build:
       context: .
-      dockerfile: dashboard/Dockerfile
-    container_name: rag-frame-dashboard
-    ports:
-      - "8501:8501"
+      dockerfile: api/Dockerfile
+    container_name: research-rag-backend
     env_file:
       - .env
     environment:
       QDRANT_URL: http://qdrant:6333
+      PYTHONPATH: /app
     volumes:
       - hf_cache:/root/.cache/huggingface
-      - ./evaluation/results:/app/evaluation/results
     depends_on:
       - qdrant
     restart: unless-stopped
+    # 내부 전용 — 호스트 포트 노출 안 함. 프론트가 내부망으로 호출한다.
 
-  designsite:
+  frontend:
     build:
       context: ./designsite
       dockerfile: Dockerfile
-    container_name: rag-frame-designsite
+    container_name: research-rag-frontend
     ports:
       - "8502:8502"
+    depends_on:
+      - backend
     restart: unless-stopped
 
 volumes:

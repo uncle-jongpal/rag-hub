@@ -41,11 +41,11 @@ V2 - 자가 교정/구조 인덱싱/에이전트
 ├── data/sample/            한국어/영어 작은 위키 샘플
 ├── techniques/             기법별 독립 구현 13개 (RAG 인터페이스 통일)
 ├── evaluation/             RAGAS 평가 하네스 + 비교 도구
-├── dashboard/              Streamlit 비교 대시보드 (V3)
-├── designsite/             정적 비교 대시보드 (V5, React + Babel CDN)
+├── api/                    FastAPI 백엔드 (V6, 13개 기법 실시간 검색 엔드포인트)
+├── designsite/             비교 대시보드 프론트엔드 (V5/V6, React + Babel CDN)
 ├── docs/                   설계 문서 + 기법 비교 + 통합 references (캡처 이미지 포함)
 ├── scripts/                초기화/데이터 다운로드/디자인 데이터 빌드 스크립트
-├── docker-compose.yml      Qdrant 벡터 DB + Streamlit + designsite 컨테이너
+├── docker-compose.yml      3컨테이너 구성 (frontend + backend + vectordb)
 ├── pyproject.toml          uv 패키지 관리
 └── .env.example            API 키 템플릿
 ```
@@ -64,15 +64,13 @@ V2 - 자가 교정/구조 인덱싱/에이전트
       - conda 사용 시 : `conda create -n rag-frame python=3.11 -y && conda activate rag-frame && pip install -e .`
       - uv 사용 시 : `uv sync`
       - 일반 venv : `python -m venv .venv && source .venv/bin/activate (윈도우는 .venv\Scripts\activate) && pip install -e .`
-   3) `docker compose up -d` Qdrant 실행
-   4) `python scripts/download_data.py` 샘플 데이터 준비 (선택, uv 환경은 `uv run` 접두)
-   5) `python techniques/01-naive/rag.py` 기법별 단독 실행
-   6) `python evaluation/ragas_eval.py --technique 01-naive` 평가 실행
-   7) `streamlit run dashboard/app.py` 대시보드 실행 (V3)
-   8) 정적 비교 대시보드 (V5) 실행 — `python scripts/build_design_data.py` 로 designsite/data/rag_data.js 갱신 후 `docker compose up -d designsite`
+   3) `docker compose up -d --build` 으로 3컨테이너 전체 기동 — frontend(8502) + backend(내부 8000) + vectordb(Qdrant 6333)
+   4) 브라우저에서 `http://localhost:8502` 접속 — 기법 비교 / 질문별 결과 / 검색 데모 / 비용·지연 / 가이드 5페이지. 검색 데모 페이지는 백엔드를 실제 호출해 답변·컨텍스트·토큰을 실시간으로 보여줌
+   5) (선택) 개별 실행/평가는 컨테이너 없이도 가능 — `python techniques/01-naive/rag.py` 기법 단독 실행, `python evaluation/ragas_eval.py --technique 01-naive` 평가 실행 (이때 Qdrant 만 필요하면 `docker compose up -d vectordb`)
+   6) 평가 결과 화면을 갱신하려면 `python scripts/build_design_data.py` 로 designsite/data/rag_data.js 재생성 후 frontend 재빌드 (`docker compose up -d --build frontend`)
 
 3. 환경별 명령어 차이
-   1) conda + pip 사용자 - 위 명령들 그대로 `python ...`, `streamlit run ...` 으로 호출
+   1) conda + pip 사용자 - 위 개별 실행/평가 명령들 그대로 `python ...` 으로 호출
    2) uv 사용자 - 모든 명령 앞에 `uv run` 접두 (예: `uv run python ...`)
    3) GPU PyTorch가 필요하면 conda 사용자는 `pip install -e .` 전에 `conda install pytorch torchvision pytorch-cuda=12.1 -c pytorch -c nvidia` 먼저 실행
 
@@ -101,6 +99,7 @@ V2 - 자가 교정/구조 인덱싱/에이전트
 
 1. V3 (완료) - Streamlit 비교 대시보드 + 평가 결과 시각화 + 토큰/비용 추적
 2. V4 (완료) - 한국어 위키 샘플 데이터셋 (98 docs / 30 questions) + Qwen3.6-27B-FP8 평가 결과 13 기법 적재
-3. V5 (완료) - 정적 비교 대시보드 designsite (React + Babel CDN, 5 페이지 - 기법 비교 / 질문별 결과 / 검색 데모 / 비용 지연 / 가이드)
-4. V6 - GraphRAG 풀스펙 (Leiden 계층 커뮤니티), RAPTOR GMM/UMAP 변종, prompt caching 적용
-5. V7 - 멀티모달 RAG (이미지/표 포함)
+3. V5 (완료) - 비교 대시보드 designsite (React + Babel CDN, 5 페이지 - 기법 비교 / 질문별 결과 / 검색 데모 / 비용 지연 / 가이드)
+4. V6 (완료) - 3컨테이너 서빙 구성 (frontend + backend + vectordb). 검색 데모가 FastAPI 백엔드를 실제 호출해 실시간 검색/답변/토큰 추적. Streamlit 대시보드(V3)는 프론트+백엔드로 대체되어 제거
+5. V7 - GraphRAG 풀스펙 (Leiden 계층 커뮤니티), RAPTOR GMM/UMAP 변종, prompt caching 적용
+6. V8 - 멀티모달 RAG (이미지/표 포함)

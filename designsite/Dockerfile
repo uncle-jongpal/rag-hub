@@ -20,6 +20,14 @@ RUN printf 'server {\n\
         image/svg+xml    svg;\n\
         application/json json;\n\
     }\n\
+    resolver 127.0.0.11 valid=10s;\n\
+    location /api/ {\n\
+        set $backend http://backend:8000;\n\
+        proxy_pass $backend;\n\
+        proxy_set_header Host $host;\n\
+        proxy_connect_timeout 10s;\n\
+        proxy_read_timeout 300s;\n\
+    }\n\
     location / {\n\
         try_files $uri $uri/ /index.html;\n\
     }\n\

@@ -102,32 +102,34 @@ flowchart LR
 2. data/sample/ - 한국어 15문서 + 영어 15문서 작은 데모셋
 3. techniques/NN-name/ - 기법별 독립 구현 13개. rag.py 한 파일에 build_index/retrieve/generate 다 있음
 4. evaluation/ - 질문 셋, 평가 스크립트, 비교 도구
-5. dashboard/ - Streamlit 비교 대시보드 (4페이지)
+5. api/ - FastAPI 백엔드 (13개 기법 실시간 검색 엔드포인트). designsite/ - 비교 대시보드 프론트엔드 (React + Babel CDN, 5페이지)
 6. docs/ - 본 문서 + overview + technique-comparison + references
 7. scripts/ - 데이터 다운로드 같은 보조 스크립트
 
-## 6. 대시보드 흐름 (V3)
+## 6. 서빙 흐름 (V6 — 3컨테이너)
+
+평가 결과 화면(기법 비교 / 질문별 결과 / 비용·지연)은 빌드 시 designsite/data 에 박힌 평가
+스냅샷을 보여주고, 인터랙티브 검색 데모만 백엔드를 실시간 호출한다.
 
 ```mermaid
 flowchart LR
     subgraph 평가 단계
         EVAL[ragas_eval.py] --> JSON[results/*.json]
+        JSON --> BUILD[scripts/build_design_data.py] --> DATA[designsite/data/rag_data.js]
     end
 
-    subgraph 대시보드
-        APP[Streamlit app.py] --> P1[1. 기법 비교]
-        APP --> P2[2. 질문별 결과]
-        APP --> P3[3. 인터랙티브 검색]
-        APP --> P4[4. 비용/지연 추적]
+    subgraph frontend [frontend · nginx 8502]
+        DATA --> P1[1. 기법 비교]
+        DATA --> P2[2. 질문별 결과]
+        DATA --> P4[4. 비용/지연]
+        P3[3. 인터랙티브 검색]
     end
 
-    JSON --> P1
-    JSON --> P2
-    JSON --> P4
-
-    P3 --> RAG[기법 RAG 직접 실행]
-    RAG --> QD[(Qdrant)]
+    P3 -- POST /api/query --> BE[backend · FastAPI 8000]
+    BE --> RAG[기법 RAG 실행]
+    RAG --> QD[(vectordb · Qdrant 6333)]
     RAG --> USAGE[usage tracker]
+    BE -- answer/contexts/usage --> P3
 ```
 
 페이지 1, 2, 4는 저장된 평가 결과(JSON)를 그대로 읽어 표시합니다. 페이지 3은 실시간으로 RAG 인스턴스를 빌드하고 인덱싱한 뒤 사용자 질문에 답변합니다.

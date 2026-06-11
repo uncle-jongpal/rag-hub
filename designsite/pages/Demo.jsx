@@ -1,23 +1,9 @@
 // Page 3 — 인터랙티브 검색 데모 (Interactive search demo)
-// No live backend in the prototype: a typed/selected question is matched to the
-// technique's real evaluated answer + contexts + token usage, with a simulated run.
+// 라이브 백엔드 연동: 입력한 질문을 백엔드(/api/query)로 보내 실제 검색 + LLM
+// 답변 + 토큰 사용량을 받아 그대로 표시한다. 예시 질문 목록만 평가셋에서 가져온다.
 (function () {
   const { METRICS, METRIC_ORDER, TECH, usageTotals } = window.RAGLabels;
   const { fmt } = window.RAGUI;
-
-  const tokenize = (s) => (s || "").toLowerCase().replace(/[^가-힣a-z0-9\s]/g, " ").split(/\s+/).filter((w) => w.length > 1);
-  function bestMatch(tech, query) {
-    const qs = window.RAG_DATA.techniques[tech].by_question || [];
-    const qtok = new Set(tokenize(query));
-    let best = null, bestScore = -1;
-    for (const r of qs) {
-      const rtok = tokenize(r.q);
-      let s = 0; for (const w of rtok) if (qtok.has(w)) s++;
-      const ratio = rtok.length ? s / rtok.length : 0;
-      if (ratio > bestScore) { bestScore = ratio; best = r; }
-    }
-    return { row: best, score: bestScore };
-  }
 
   const STEPS = ["인덱스 로드", "검색 (retrieve)", "컨텍스트 선택", "LLM 답변 생성"];
 
@@ -26,28 +12,49 @@
     const [tech, setTech] = React.useState("02-hybrid-search");
     const [topk, setTopk] = React.useState(5);
     const [query, setQuery] = React.useState("");
-    const [phase, setPhase] = React.useState("idle"); // idle | running | done
+    const [phase, setPhase] = React.useState("idle"); // idle | running | done | error
     const [step, setStep] = React.useState(0);
     const [result, setResult] = React.useState(null);
     const timers = React.useRef([]);
 
     const suggestions = (window.RAG_DATA.techniques[tech].by_question || []).slice(0, 6).map((r) => r.q);
 
-    const run = () => {
-      if (!query.trim()) return;
+    const run = async () => {
+      const q = query.trim();
+      if (!q) return;
       timers.current.forEach(clearTimeout); timers.current = [];
       setPhase("running"); setStep(0); setResult(null);
-      STEPS.forEach((_, i) => timers.current.push(setTimeout(() => setStep(i + 1), 380 * (i + 1))));
-      timers.current.push(setTimeout(() => {
-        const m = bestMatch(tech, query);
-        const u = usageTotals(tech);
-        const nq = (window.RAG_DATA.techniques[tech].by_question || []).length || 1;
+      // 마지막 단계는 응답이 올 때까지 active 로 유지
+      STEPS.forEach((_, i) => {
+        if (i < STEPS.length - 1) timers.current.push(setTimeout(() => setStep(i + 1), 360 * (i + 1)));
+      });
+      try {
+        const resp = await fetch("/api/query", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ technique: tech, query: q, top_k: topk }),
+        });
+        if (!resp.ok) throw new Error("백엔드 응답 오류 (" + resp.status + ")");
+        const data = await resp.json();
+        if (data.error) throw new Error(data.error);
+        timers.current.forEach(clearTimeout);
+        setStep(STEPS.length);
+        const u = data.usage || {};
         setResult({
-          row: m.row, score: m.score,
-          perCall: { calls: Math.max(1, Math.round(u.infCalls / nq)), tok: Math.round(u.infTok / nq), sec: u.infSec / nq },
+          row: { q, answer: data.answer || "", contexts: data.contexts || [] },
+          perCall: {
+            calls: u.calls || 0,
+            tok: (u.input_tokens || 0) + (u.output_tokens || 0),
+            sec: u.elapsed_seconds || 0,
+            cost: u.cost_usd || 0,
+          },
         });
         setPhase("done");
-      }, 380 * (STEPS.length + 1)));
+      } catch (e) {
+        timers.current.forEach(clearTimeout);
+        setResult({ error: String((e && e.message) || e) });
+        setPhase("error");
+      }
     };
     React.useEffect(() => () => timers.current.forEach(clearTimeout), []);
 
@@ -59,7 +66,7 @@
         <div className="pagehead">
           <div className="eyebrow">03 · Interactive Search</div>
           <h1>인터랙티브 검색 데모</h1>
-          <p>기법을 고르고 질문을 입력하면 검색 → 컨텍스트 → 답변 흐름을 실행합니다. 이 프로토타입은 평가셋에 기록된 실제 답변·컨텍스트·토큰 사용량을 매칭해 보여줍니다.</p>
+          <p>기법을 고르고 질문을 입력하면 백엔드가 실제로 검색 → 컨텍스트 선택 → 답변 생성을 실행하고, 답변·사용된 컨텍스트·토큰 사용량을 그대로 보여줍니다.</p>
         </div>
 
         <div className="grid2" style={{ alignItems: "start" }}>
@@ -99,10 +106,10 @@
 
           {/* run status / usage */}
           <div className="panel">
-            <div className="ph"><div className="t">실행 · Pipeline</div>{result && <div className="meta mono">match {Math.round(result.score * 100)}%</div>}</div>
+            <div className="ph"><div className="t">실행 · Pipeline</div>{result && !result.error && <div className="meta mono">실시간</div>}</div>
             <div className="pb">
               {phase === "idle" && <div className="empty">질문을 입력하고 <span className="kbd">실행</span> 하세요.</div>}
-              {phase !== "idle" && (
+              {(phase === "running" || phase === "done") && (
                 <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
                   {STEPS.map((s, i) => {
                     const state = step > i ? "done" : (step === i && phase === "running" ? "active" : "pending");
@@ -113,11 +120,17 @@
                       </div>
                     );
                   })}
+                  {phase === "running" && <div className="note" style={{ fontSize: 11, marginTop: 4 }}>처음 고른 기법은 인덱스 준비로 시간이 걸릴 수 있습니다.</div>}
+                </div>
+              )}
+              {phase === "error" && result && (
+                <div className="note" style={{ borderColor: "rgba(199,121,27,.3)", background: "rgba(199,121,27,.06)" }}>
+                  <b style={{ color: "var(--warn)" }}>실행 실패</b> — {result.error}
                 </div>
               )}
               {phase === "done" && result && (
                 <div className="fadein" style={{ marginTop: 16, borderTop: "1px solid var(--line)", paddingTop: 14 }}>
-                  <label className="fl">토큰 / 비용 (이번 호출 추정)</label>
+                  <label className="fl">토큰 / 비용 (이번 호출)</label>
                   <div style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: 10 }}>
                     {[["LLM 호출", result.perCall.calls, ""], ["토큰", result.perCall.tok.toLocaleString(), ""], ["시간", result.perCall.sec.toFixed(2), "s"]].map(([l, v, suf]) => (
                       <div key={l} style={{ background: "var(--soft)", border: "1px solid var(--line)", borderRadius: 8, padding: "11px 12px" }}>
@@ -126,7 +139,7 @@
                       </div>
                     ))}
                   </div>
-                  <div className="note mono" style={{ marginTop: 12, fontSize: 11 }}>비용 $0.00 — 로컬 {window.RAGLabels.model} (무료). 토큰은 추론 누적 ÷ 질문 수 추정.</div>
+                  <div className="note mono" style={{ marginTop: 12, fontSize: 11 }}>추정 비용 ${result.perCall.cost.toFixed(5)} — {window.RAGLabels.model}.</div>
                 </div>
               )}
             </div>
@@ -138,10 +151,9 @@
           <div className="panel fadein" style={{ marginTop: 16 }}>
             <div className="ph">
               <div className="t">답변 · Answer</div>
-              <div className="meta">가장 가까운 평가 질문: <b style={{ color: "var(--ink)" }}>{r.q}</b></div>
+              <div className="meta">질문: <b style={{ color: "var(--ink)" }}>{r.q}</b></div>
             </div>
             <div className="pb">
-              {result.score < 0.34 && <div className="note" style={{ marginBottom: 14, borderColor: "rgba(199,121,27,.3)", background: "rgba(199,121,27,.06)" }}><b style={{ color: "var(--warn)" }}>데모 안내</b> — 입력 질문과 평가셋의 일치도가 낮습니다. 가장 가까운 기록 결과를 보여줍니다.</div>}
               <div style={{ fontSize: 14, lineHeight: 1.7, whiteSpace: "pre-wrap", marginBottom: 18 }}>{r.answer}</div>
               <label className="fl">사용된 컨텍스트 · top_k = {topk}</label>
               <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10 }}>
